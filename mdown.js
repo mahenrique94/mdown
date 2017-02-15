@@ -2,8 +2,8 @@
  *  Editor que faz uso do markdown
  */
 const REGEX_P = new RegExp('^(.+)$', 'gim');
-const REGEX_STRONG = new RegExp('(([*]{2})(.+)([*]{2}))', 'gim');
-const REGEX_EM = new RegExp('(([_])(.+)([_]))', 'gim');
+const REGEX_STRONG = new RegExp('(([*]{2})([a-z\\s\\w\\d\\.\\-]+)([*]{2}))', 'gim');
+const REGEX_EM = new RegExp('(([_])([\a-z\s\\d\\.\\-]+)([_]))', 'gim');
 const REGEX_H1 = new RegExp('(([#]\\s)([^\\<]+))', 'gim');
 const REGEX_H2 = new RegExp('(([#]{2}\\s)([^\\<]+))', 'gim');
 const REGEX_H3 = new RegExp('(([#]{3}\\s)([^\\<]+))', 'gim');
@@ -265,7 +265,7 @@ function insertH6(button) {
 function insertLink(button) {
     const editor = button.parentNode.parentNode.parentNode.parentNode.querySelector('.md-editor__data');
     if (editor)
-        insertMarkDown(editor, '[link]', '(url)', EDITOR_CURSOR_POSITION_BEGIN, EDITOR_CURSOR_POSITION_END, 1);
+        insertMarkDown(editor, '[link]', '(url)', EDITOR_CURSOR_POSITION_BEGIN, EDITOR_CURSOR_POSITION_END, 5);
 }
 
 /** @auth Matheus Castiglioni
@@ -274,7 +274,7 @@ function insertLink(button) {
 function insertPicture(button) {
     const editor = button.parentNode.parentNode.parentNode.parentNode.querySelector('.md-editor__data');
     if (editor)
-        insertMarkDown(editor, '![image]', '(url)', EDITOR_CURSOR_POSITION_BEGIN, EDITOR_CURSOR_POSITION_END, 1);
+        insertMarkDown(editor, '![image]', '(url)', EDITOR_CURSOR_POSITION_BEGIN, EDITOR_CURSOR_POSITION_END, 7);
 }
 
 /** @auth Matheus Castiglioni
@@ -283,7 +283,7 @@ function insertPicture(button) {
 function insertVideo(button) {
     const editor = button.parentNode.parentNode.parentNode.parentNode.querySelector('.md-editor__data');
     if (editor)
-        insertMarkDown(editor, '?[video]', '(url)', EDITOR_CURSOR_POSITION_BEGIN, EDITOR_CURSOR_POSITION_END, 1);
+        insertMarkDown(editor, '?[video]', '(url)', EDITOR_CURSOR_POSITION_BEGIN, EDITOR_CURSOR_POSITION_END, 7);
 }
 
 /** @auth Matheus Castiglioni
