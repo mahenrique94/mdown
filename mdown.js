@@ -14,7 +14,7 @@ const REGEX_A = new RegExp('(([\\[])(.+)([\\]])([(])(.+)([)]))', 'gim');
 const REGEX_IMG = new RegExp('(([!])([\\[])(.+)([\\]])([(])(.+)([)]))', 'gim');
 const REGEX_IFRAME = new RegExp('(([?])([\\[])(.+)([\\]])([(])(.+)([)]))', 'gim');
 const REGEX_BLOCKQUOTE = new RegExp('(([\\>]\\s)([^\\<]+))', 'gim');
-const REGEX_CODE = new RegExp('(([`]{3})([A-Z\\-]*)([\\w\\W\\s\\S\\n\\r\\d\\D]+)([`]{3}))', 'gim');
+const REGEX_CODE = new RegExp('(([`]{3})([\\sA-Z\\-]*)([\\w\\W\\s\\S\\n\\r\\d\\D]+)([`]{3}))', 'gim');
 
 /** @auth Matheus Castiglioni
  *  Processa cada tag markdown
@@ -22,6 +22,7 @@ const REGEX_CODE = new RegExp('(([`]{3})([A-Z\\-]*)([\\w\\W\\s\\S\\n\\r\\d\\D]+)
 function processMarkDown(editor) {
     let html = editor.value;
     html = markDownP(html);
+    html = markDownBlockquote(html);
     html = markDownStrong(html);
     html = markDownEM(html);
     html = markDownH6(html);
@@ -33,7 +34,6 @@ function processMarkDown(editor) {
     html = markDownIMG(html);
     html = markDownIframe(html);
     html = markDownA(html);
-    html = markDownBlockquote(html);
     html = markDownCode(html);
     insertOutput(editor, html);
 }
@@ -47,6 +47,14 @@ document.querySelectorAll('.md-editor__data').forEach(editor => {
         EDITOR_CURSOR_POSITION_END = this.selectionEnd;
     });
 });
+
+/** @auth Matheus Castiglioni
+ *  Pega o html gerado pelo markdown e insere no preview
+ */
+function insertOutput(editor, html) {
+    let output = editor.nextSibling.nextSibling;
+    output.innerHTML = html;
+}
 
 /** @auth Matheus Castiglioni
  *  Processa o markdown da tag P
@@ -144,14 +152,6 @@ function markDownBlockquote(html) {
  */
 function markDownCode(html) {
     return html.replace(REGEX_CODE, '<pre class="language-xxxx $3"><code class="language-xxxx $3">$4</code></pre>');
-}
-
-/** @auth Matheus Castiglioni
- *  Pega o html gerado pelo markdown e insere no preview
- */
-function insertOutput(editor, html) {
-    let output = editor.nextSibling.nextSibling;
-    output.innerHTML = html;
 }
 
 /** @auth Matheus Castiglioni
