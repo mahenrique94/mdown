@@ -299,7 +299,7 @@ function markDownBlockquote(html) {
  *  Processa o markdown da tag code inline
  */
 function markDownCode(html) {
-    return html.replace(REGEX_CODE, '<pre class="language-xxxx $3"><code class="language-xxxx $3">$4</code></pre>');
+    return html.replace(REGEX_CODE, '<pre class="$3 language-xxxx"><code class="$3 language-xxxx">$4</code></pre>');
 }
 
 /** @auth Matheus Castiglioni
