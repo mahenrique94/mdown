@@ -1,7 +1,8 @@
 /** @auth Matheus Castiglioni
  *  Editor que faz uso do markdown
  */
-const HTML_MDOWN = `
+function init(content, focus, id, name) {
+	return `
     <aside class="md-editor__toolbar">
         <ul class="md-editor__menu">
             <li class="md-editor__item"><button class="md-editor__action" onclick="insertBold(this);" role="button" title="Negrito" type="button"><i class="icon-bold"></i></button></li>
@@ -30,7 +31,7 @@ const HTML_MDOWN = `
         </ul>
     </aside>
     <div class="md-editor__wrap">
-        <textarea autofocus class="md-editor__data" onkeyup="processMarkDown(this, event);"></textarea>
+        <textarea ${focus} class="md-editor__data" data-upper="false" id="${id}" name="${name}" onkeyup="processMarkDown(this, event);">${content}</textarea>
         <output class="md-editor__output"></output>
     </div>
     <div class="md-editor__help">
@@ -91,7 +92,8 @@ const HTML_MDOWN = `
             <p>Para identar os códigos utilize quatro espaços.</p>
         </div>
     </div>
-`;
+`};
+
 const REGEX_P = new RegExp('^(.+)$', 'gim');
 const REGEX_STRONG = new RegExp('(([*]{2})([a-z\\s\\w\\d\\.\\-]+)([*]{2}))', 'gim');
 const REGEX_EM = new RegExp('(([_])([\a-z\s\\d\\.\\-]+)([_]))', 'gim');
@@ -144,7 +146,7 @@ function processMarkDownTags(value) {
 const editors = document.querySelectorAll('.md-editor')
 if (editors.length > 0) {
     editors.forEach(editor => {
-        editor.innerHTML = HTML_MDOWN;
+        editor.innerHTML = init(editor.dataset.editorContent, editor.dataset.editorFocus, editor.dataset.editorId, editor.dataset.editorName);
     });
 }
 
@@ -154,6 +156,7 @@ if (editors.length > 0) {
 const datas = document.querySelectorAll('.md-editor__data');
 if (datas.length > 0) {
     datas.forEach(editor => {
+    	editor.dispatchEvent(new Event('keyup'));
         editor.addEventListener('blur', function() {
             getSelectionCursor(this);
         });
@@ -208,91 +211,91 @@ function insertOutput(element, html) {
  *  Processa o markdown da tag P
  */
 function markDownP(html) {
-    return html.replace(REGEX_P, '<p>$1</p>');
+    return html.replace(REGEX_P, '<p class="md-editor__p">$1</p>');
 }
 
 /** @auth Matheus Castiglioni
  *  Processa o markdown da tag STRONG
  */
 function markDownStrong(html) {
-    return html.replace(REGEX_STRONG, '<strong>$3</strong>');
+    return html.replace(REGEX_STRONG, '<strong class="md-editor__strong">$3</strong>');
 }
 
 /** @auth Matheus Castiglioni
  *  Processa o markdown da tag EM
  */
 function markDownEM(html) {
-    return html.replace(REGEX_EM, '<em>$3</em>');
+    return html.replace(REGEX_EM, '<em class="md-editor__em">$3</em>');
 }
 
 /** @auth Matheus Castiglioni
  *  Processa o markdown da tag H1
  */
 function markDownH1(html) {
-    return html.replace(REGEX_H1, '<h1>$3</h1>');
+    return html.replace(REGEX_H1, '<h1 class="md-editor__h1">$3</h1>');
 }
 
 /** @auth Matheus Castiglioni
  *  Processa o markdown da tag H2
  */
 function markDownH2(html) {
-    return html.replace(REGEX_H2, '<h2>$3</h2>');
+    return html.replace(REGEX_H2, '<h2 class="md-editor__h2">$3</h2>');
 }
 
 /** @auth Matheus Castiglioni
  *  Processa o markdown da tag H3
  */
 function markDownH3(html) {
-    return html.replace(REGEX_H3, '<h3>$3</h3>');
+    return html.replace(REGEX_H3, '<h3 class="md-editor__h3">$3</h3>');
 }
 
 /** @auth Matheus Castiglioni
  *  Processa o markdown da tag H4
  */
 function markDownH4(html) {
-    return html.replace(REGEX_H4, '<h4>$3</h4>');
+    return html.replace(REGEX_H4, '<h4 class="md-editor__h4">$3</h4>');
 }
 
 /** @auth Matheus Castiglioni
  *  Processa o markdown da tag H5
  */
 function markDownH5(html) {
-    return html.replace(REGEX_H5, '<h5>$3</h5>');
+    return html.replace(REGEX_H5, '<h5 class="md-editor__h5">$3</h5>');
 }
 
 /** @auth Matheus Castiglioni
  *  Processa o markdown da tag H6
  */
 function markDownH6(html) {
-    return html.replace(REGEX_H6, '<h6>$3</h6>');
+    return html.replace(REGEX_H6, '<h6 class="md-editor__h6">$3</h6>');
 }
 
 /** @auth Matheus Castiglioni
  *  Processa o markdown da tag A
  */
 function markDownA(html) {
-    return html.replace(REGEX_A, '<a href="$6">$3</a>');
+    return html.replace(REGEX_A, '<a class="md-editor__link" href="$6">$3</a>');
 }
 
 /** @auth Matheus Castiglioni
  *  Processa o markdown da tag IMG
  */
 function markDownIMG(html) {
-    return html.replace(REGEX_IMG, '<img alt="$4" src="$7">');
+    return html.replace(REGEX_IMG, '<img alt="$4" class="md-editor__img" src="$7">');
 }
 
 /** @auth Matheus Castiglioni
  *  Processa o markdown da tag IFRAME
  */
 function markDownIframe(html) {
-    return html.replace(REGEX_IFRAME, '<iframe src="$7">');
+    return html.replace(REGEX_IFRAME, '<iframe class="md-editor__iframe" src="$7">');
 }
 
 /** @auth Matheus Castiglioni
  *  Processa o markdown da tag BLOCKQUOTE
  */
 function markDownBlockquote(html) {
-    return html.replace(REGEX_BLOCKQUOTE, '<blockquote>$3</blockquote>');
+    return html.replace(REGEX_BLOCKQUOTE, '<blockquote class="md-editor__blockquote">$3</blockquote>');
 }
 
 /** @auth Matheus Castiglioni

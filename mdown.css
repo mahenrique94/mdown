@@ -118,3 +118,44 @@ h1, h2, h3, h4, h5, h6 {
 .md-editor__info:last-child {
     margin-bottom: 0;
 }
+
+/* Estilizando os elementos do editor */
+.md-editor__p {
+	line-height: 2;
+	margin: 0;
+}
+.md-editor__strong {
+	font-weight: 500;
+}
+.md-editor__em {
+	font-weight: 100;
+}
+.md-editor__h1, .md-editor__h2, .md-editor__h3, .md-editor__h4, .md-editor__h5, .md-editor__h6 {
+	margin: .5rem 0;
+}
+.md-editor__link {
+	font-weight: 300;
+	text-decoration: underline;
+}
+.md-editor__img {
+	width: 50%;
+}
+.md-editor__iframe {
+	width: 100%;
+	height: 500px;
+}
+.md-editor__blockquote {
+	margin: 2rem 3rem;
+	padding: 1rem 2.5rem;
+	position: relative;
+}
+.md-editor__blockquote::before {
+	color: #DCDCDC;
+	content: '"';
+	font-family: cursive;
+	font-size: 4.5rem;
+	left: 0;
+	opacity: .5;
+	position: absolute;
+	top: 0;
+}
