@@ -1,6 +1,97 @@
 /** @auth Matheus Castiglioni
  *  Editor que faz uso do markdown
  */
+const HTML_MDOWN = `
+    <aside class="md-editor__toolbar">
+        <ul class="md-editor__menu">
+            <li class="md-editor__item"><button class="md-editor__action" onclick="insertBold(this);" role="button" title="Negrito" type="button"><i class="icon-bold"></i></button></li>
+            <li class="md-editor__item"><button class="md-editor__action" onclick="insertItalic(this);" role="button" title="Itálico" type="button"><i class="icon-italic"></i></button></li>
+            <li class="md-editor__item"><button class="md-editor__action" onclick="showSubMenu(this);" role="button" title="Header" type="button"><i class="icon-header"></i></button>
+                <ul class="md-editor__submenu">
+                    <li class="md-editor__subitem"><button class="md-editor__action" onclick="insertH1(this);" role="button" type="button"><h1>Header</h1></button></li>
+                    <li class="md-editor__subitem"><button class="md-editor__action" onclick="insertH2(this);" role="button" type="button"><h2>Header</h2></button></li>
+                    <li class="md-editor__subitem"><button class="md-editor__action" onclick="insertH3(this);" role="button" type="button"><h3>Header</h3></button></li>
+                    <li class="md-editor__subitem"><button class="md-editor__action" onclick="insertH4(this);" role="button" type="button"><h4>Header</h4></button></li>
+                    <li class="md-editor__subitem"><button class="md-editor__action" onclick="insertH5(this);" role="button" type="button"><h5>Header</h5></button></li>
+                    <li class="md-editor__subitem"><button class="md-editor__action" onclick="insertH6(this);" role="button" type="button"><h6>Header</h6></button></li>
+                </ul>
+            </li>
+            <li class="md-editor__item"><button class="md-editor__action" onclick="insertLink(this);" role="button" title="Link" type="button"><i class="icon-link"></i></button></li>
+            <li class="md-editor__item"><button class="md-editor__action" onclick="insertList(this);" role="button" title="Lista" type="button"><i class="icon-list-bullet"></i></button>
+            <li class="md-editor__item"><button class="md-editor__action" onclick="insertListOrdered(this);" role="button" title="Lista Ordenada" type="button"><i class="icon-list-numbered"></i></button>
+            <li class="md-editor__item"><button class="md-editor__action" onclick="insertPicture(this);" role="button" title="Imagem" type="button"><i class="icon-picture"></i></button>
+            <li class="md-editor__item"><button class="md-editor__action" onclick="insertVideo(this);" role="button" title="Vídeo" type="button"><i class="icon-videocam"></i></button>
+            <li class="md-editor__item"><button class="md-editor__action" onclick="insertCitation(this);" role="button" title="Citação'" type="button"><i class="icon-quote-left"></i></button></li>
+            <li class="md-editor__item"><button class="md-editor__action" onclick="insertCode(this);" role="button" title="Código" type="button"><i class="icon-code"></i></button>
+        </ul>
+        <ul class="md-editor__menu">
+            <li class="md-editor__item"><button class="md-editor__action" onclick="expand(this);" role="button" title="Expandir" type="button"><i class="icon-resize-horizontal"></i></button></li>
+            <li class="md-editor__item"><button class="md-editor__action" onclick="help(this);" role="button" title="Ajuda" type="button"><i class="icon-info"></i></button></li>
+        </ul>
+    </aside>
+    <div class="md-editor__wrap">
+        <textarea autofocus class="md-editor__data" onkeyup="processMarkDown(this, event);"></textarea>
+        <output class="md-editor__output"></output>
+    </div>
+    <div class="md-editor__help">
+        <div class="md-editor__info">
+            <h2 class="md-editor__title">Formatação básica</h2>
+            <p>**negrito**</p>
+            <p>_itálico_</p>
+            <p>**negrito e _itálico_**</p>
+        </div>
+        <div class="md-editor__info">
+            <h2 class="md-editor__title">Como inserir títulos</h2>
+            <p># H1</p>
+            <p>## H2</p>
+            <p>### H3</p>
+            <p>#### H4</p>
+            <p>##### H5</p>
+            <p>###### H6</p>
+        </div>
+        <div class="md-editor__info">
+            <h2 class="md-editor__title">Como inserir links</h2>
+            <p>[Nome do link](http://www.globo.com)</p>
+        </div>
+        <div class="md-editor__info">
+            <h2 class="md-editor__title">Como inserir listas</h2>
+            <h4>Normal</h4>
+            <p>- Item 1</p>
+            <p>- Item 2</p>
+            <p>- Item 3</p>
+            <h4>Ordenada</h4>
+            <p>1. Item 1</p>
+            <p>2. Item 2</p>
+            <p>3. Item 3</p>
+        </div>
+        <div class="md-editor__info">
+            <h2 class="md-editor__title">Como inserir imagens</h2>
+            <p>![Nome da imagem](URL)</p>
+        </div>
+        <div class="md-editor__info">
+            <h2 class="md-editor__title">Como inserir videos</h2>
+            <p>?[Nome do vídeo](URL)</p>
+        </div>
+        <div class="md-editor__info">
+            <h2 class="md-editor__title">Como inserir uma citação</h2>
+            <p>> Digite aqui a citação</p>
+        </div>
+        <div class="md-editor__info">
+            <h2 class="md-editor__title">Como inserir códigos</h2>
+            <h4>Sem formatação</h4>
+            <p>\`\`\`</p>
+            <p>// insira seu código aqui</p>
+            <p>\`\`\`</p>
+            <h4>Com formatação</h4>
+            <p>\`\`\` language-xxxx</p>
+            <p>// insira seu código aqui</p>
+            <p>\`\`\`</p>
+            <p><strong>Obs:</strong> Troque "xxxx" pelo nome da linguagem que você esta postando código.</p>
+            <h4>Identação</h4>
+            <p>Para identar os códigos utilize quatro espaços.</p>
+        </div>
+    </div>
+`;
 const REGEX_P = new RegExp('^(.+)$', 'gim');
 const REGEX_STRONG = new RegExp('(([*]{2})([a-z\\s\\w\\d\\.\\-]+)([*]{2}))', 'gim');
 const REGEX_EM = new RegExp('(([_])([\a-z\s\\d\\.\\-]+)([_]))', 'gim');
@@ -16,11 +107,20 @@ const REGEX_IFRAME = new RegExp('(([?])([\\[])(.+)([\\]])([(])(.+)([)]))', 'gim'
 const REGEX_BLOCKQUOTE = new RegExp('(([\\>]\\s)([^\\<]+))', 'gim');
 const REGEX_CODE = new RegExp('(([`]{3})([\\sA-Z\\-]*)([\\w\\W\\s\\S\\n\\r\\d\\D]+)([`]{3}))', 'gim');
 
+const KEYCODE_TAB = 9;
+
+/** @auth Matheus Castiglioni
+ *  Processa cada digitação do editor
+ */
+function processMarkDown(editor, event) {
+    insertOutput(editor, processMarkDownTags(editor.value));
+}
+
 /** @auth Matheus Castiglioni
  *  Processa cada tag markdown
  */
-function processMarkDown(editor) {
-    let html = editor.value;
+function processMarkDownTags(value) {
+    let html = value;
     html = markDownP(html);
     html = markDownBlockquote(html);
     html = markDownStrong(html);
@@ -35,24 +135,72 @@ function processMarkDown(editor) {
     html = markDownIframe(html);
     html = markDownA(html);
     html = markDownCode(html);
-    insertOutput(editor, html);
+    return html;
+}
+
+/** @auth Matheus Castiglioni
+ *  Função para iniciar o markdown
+ */
+const editors = document.querySelectorAll('.md-editor')
+if (editors.length > 0) {
+    editors.forEach(editor => {
+        editor.innerHTML = HTML_MDOWN;
+    });
 }
 
 /** @auth Matheus Castiglioni
  *  Função para pegar a posição do cursor no textarea e inserir os markdowns
  */
-document.querySelectorAll('.md-editor__data').forEach(editor => {
-    editor.addEventListener('blur', function() {
-        EDITOR_CURSOR_POSITION_BEGIN = this.selectionStart;
-        EDITOR_CURSOR_POSITION_END = this.selectionEnd;
+const datas = document.querySelectorAll('.md-editor__data');
+if (datas.length > 0) {
+    datas.forEach(editor => {
+        editor.addEventListener('blur', function() {
+            getSelectionCursor(this);
+        });
+        editor.addEventListener('keydown', function(event) {
+            getSelectionCursor(this);
+            if (event.keyCode == KEYCODE_TAB) {
+                event.preventDefault();
+                event.stopPropagation();
+                insertIdentation(editor);
+            }
+        });
     });
-});
+}
+
+/** @auth Matheus Castiglioni
+ *  Função para pegar o markdown do banco de dados e converte-lo para as tags HTML
+ */
+const bases = document.querySelectorAll('.md-editor__base')
+if (bases.length > 0) {
+    bases.forEach(base => {
+        insertOutput(base, processMarkDownTags(base.textContent));        
+    });
+}
+
+/** @auth Matheus Castiglioni
+ *  Função para adicionar identação no textarea
+ */
+function insertIdentation(editor) {
+    editor.value = editor.value.substring(0, EDITOR_CURSOR_POSITION_BEGIN) + '\t' + editor.value.substring(EDITOR_CURSOR_POSITION_END, editor.value.length);
+    editor.setSelectionRange((EDITOR_CURSOR_POSITION_END + 1), (EDITOR_CURSOR_POSITION_END + 1));
+}
+
+/** @auth Matheus Castiglioni
+ *  Função para pegar a posição do cursor no textarea
+ */
+function getSelectionCursor(editor) {
+    EDITOR_CURSOR_POSITION_BEGIN = editor.selectionStart;
+    EDITOR_CURSOR_POSITION_END = editor.selectionEnd;
+}
 
 /** @auth Matheus Castiglioni
  *  Pega o html gerado pelo markdown e insere no preview
  */
-function insertOutput(editor, html) {
-    let output = editor.nextSibling.nextSibling;
+function insertOutput(element, html) {
+    let output = element;
+    if (element.nodeName === 'TEXTAREA')
+        output = element.nextSibling.nextSibling;
     output.innerHTML = html;
 }
 
