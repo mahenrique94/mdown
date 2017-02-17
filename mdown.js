@@ -98,8 +98,8 @@ function build(textarea) {
 };
 
 const REGEX_P = new RegExp('^(.+)$', 'gim');
-const REGEX_STRONG = new RegExp('(([*]{2})([a-z\\s\\w\\d\\.\\-]+)([*]{2}))', 'gim');
-const REGEX_EM = new RegExp('(([_])([\a-z\s\\d\\.\\-]+)([_]))', 'gim');
+const REGEX_STRONG = new RegExp('(([*]{2})([a-z\\s\\w\\d\\.\\-\\|]+)([*]{2}))', 'gim');
+const REGEX_EM = new RegExp('(([_])([a-z\\s\\d\\.\\-\\|]+)([_]))', 'gim');
 const REGEX_H1 = new RegExp('(([#]\\s)([^\\<]+))', 'gim');
 const REGEX_H2 = new RegExp('(([#]{2}\\s)([^\\<]+))', 'gim');
 const REGEX_H3 = new RegExp('(([#]{3}\\s)([^\\<]+))', 'gim');
@@ -109,7 +109,7 @@ const REGEX_H6 = new RegExp('(([#]{6}\\s)([^\\<]+))', 'gim');
 const REGEX_A = new RegExp('(([\\[])(.+)([\\]])([(])(.+)([)]))', 'gim');
 const REGEX_IMG = new RegExp('(([!])([\\[])(.+)([\\]])([(])(.+)([)]))', 'gim');
 const REGEX_IFRAME = new RegExp('(([?])([\\[])(.+)([\\]])([(])(.+)([)]))', 'gim');
-const REGEX_BLOCKQUOTE = new RegExp('(([\\>]\\s)([^\\<]+))', 'gim');
+const REGEX_BLOCKQUOTE = new RegExp('(([\\>]\\s)([^\\<\\n]+))', 'gim');
 const REGEX_CODE = new RegExp('(([`]{3})([\\sA-Z\\-]*)([\\w\\W\\s\\S\\n\\r\\d\\D]+)([`]{3}))', 'gim');
 const REGEX_IDENTATION = new RegExp('([\t])', 'gim');
 
@@ -148,8 +148,8 @@ function processMarkDown(editor, event) {
  */
 function processMarkDownTags(value) {
     let html = value;
-    html = markDownBlockquote(html);
     html = markDownP(html);
+    html = markDownBlockquote(html);
     html = markDownStrong(html);
     html = markDownEM(html);
     html = markDownH6(html);
@@ -305,20 +305,23 @@ function markDownBlockquote(html) {
 }
 
 /** @auth Matheus Castiglioni
- *  Processa o markdown da identação do código
+ *  Processa o markdown da tag code inline
  */
 function markDownCode(html) {
-    return html.replace(REGEX_IDENTATION, '&nbsp;&nbsp;&nbsp;&nbsp;');
+    let code = html.replace(REGEX_CODE, '$4');
+    code = code.replace(new RegExp('(([\\<])([a-z\\d]+)([\\s])([c][l][a][s]{2})([\\=])([\\"])([m][d])([\\-])([e][d][i][t][o][r])([\\_]{2})([a-z\\d]+)([\\"])([\\>])(.*)([\\<])([\\/])([a-z\\d]+)([\\>]))', 'gim'), '$15');
+    code = code.replace(new RegExp('(([\\<])([a-z\\d]+)([\\s])([c][l][a][s]{2})([\\=])([\\"])([m][d])([\\-])([e][d][i][t][o][r])([\\_]{2})([a-z\\d]+)([\\"])([\\>])(.*)([\\<])([\\/])([a-z\\d]+)([\\>]))', 'gim'), '');
+    code = code.replace(/[\\<]/g, '&lt;').replace(/[\\>]/g, '&gt;');
+    code = code.trim();
+    html = html.replace(REGEX_CODE, `<pre class="$3 language-xxxx"><code class="$3 language-xxxx">${code}</code></pre>`);
+    return html;
 }
 
 /** @auth Matheus Castiglioni
- *  Processa o markdown da tag code inline
+ *  Processa o markdown da identação do código
  */
 function markDownIdentation(html) {
-    let code = html.replace(REGEX_CODE, '$4');
-    code = code.replace(/[\\<]/g, '&lt;').replace(/[\\>]/g, '&gt;');
-    html = html.replace(REGEX_CODE, `<pre class="$3 language-xxxx"><code class="$3 language-xxxx">${code}</code></pre>`);
-    return html;
+    return html.replace(REGEX_IDENTATION, '&nbsp;&nbsp;&nbsp;&nbsp;');
 }
 
 /** @auth Matheus Castiglioni
