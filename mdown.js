@@ -2,7 +2,7 @@
  *  Editor que faz uso do markdown
  */
 function build(textarea) {
-    let editor = buildEditor();
+    let wrap = buildWrap();
 	const html = `
     <aside class="md-editor__toolbar">
         <ul class="md-editor__menu">
@@ -32,7 +32,7 @@ function build(textarea) {
         </ul>
     </aside>
     <div class="md-editor__wrap">
-        <textarea ${textarea.autoFocus} class="md-editor__data" data-upper="false" id="${textarea.id}" name="${textarea.name}" onkeyup="processMarkDown(this, event);">${textarea.value}</textarea>
+        <textarea ${textarea.autofocus} class="md-editor__data" data-upper="false" id="${textarea.id}" name="${textarea.name}" onkeyup="processMarkDown(this, event);">${textarea.value}</textarea>
         <output class="md-editor__output"></output>
     </div>
     <div class="md-editor__help">
@@ -92,10 +92,11 @@ function build(textarea) {
             <h4>Identação</h4>
             <p>Para identar os códigos utilize quatro espaços.</p>
         </div>
-    </div>`
-    editor.innerHTML = html;
-    textarea.parentNode.insertBefore(editor, textarea);
-    textarea.style.display = 'none';
+    </div>`;
+    wrap.innerHTML = html;
+    textarea.parentNode.insertBefore(wrap, textarea);
+    textarea.remove();
+    return wrap.querySelector('.md-editor__data');
 };
 
 const REGEX_P = new RegExp('^(.+)$', 'gim');
@@ -121,8 +122,8 @@ const KEYCODE_TAB = 9;
 const inits = document.querySelectorAll('.md-editor__init')
 if (inits.length > 0) {
     inits.forEach(init => {
-        build(init);
-        insertOutput(init, processMarkDownTags(init.value));        
+        let editor = build(init);
+        insertOutput(editor, processMarkDownTags(editor.value));
     });
 }
 
@@ -505,8 +506,8 @@ function hasTextSelected(begin , end) {
 /** @auth Matheus Castiglioni
  *  Cria a div que ira englobar todos os componentes do editor
  */
-function buildEditor() {
-    let editor = document.createElement('DIV');
-    editor.classList.add('md-editor');
-    return editor;
+function buildWrap() {
+    let wrap = document.createElement('DIV');
+    wrap.classList.add('md-editor');
+    return wrap;
 }
