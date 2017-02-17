@@ -1,8 +1,9 @@
 /** @auth Matheus Castiglioni
  *  Editor que faz uso do markdown
  */
-function init(content, focus, id, name) {
-	return `
+function build(textarea) {
+    let editor = buildEditor();
+	const html = `
     <aside class="md-editor__toolbar">
         <ul class="md-editor__menu">
             <li class="md-editor__item"><button class="md-editor__action" onclick="insertBold(this);" role="button" title="Negrito" type="button"><i class="icon-bold"></i></button></li>
@@ -31,7 +32,7 @@ function init(content, focus, id, name) {
         </ul>
     </aside>
     <div class="md-editor__wrap">
-        <textarea ${focus} class="md-editor__data" data-upper="false" id="${id}" name="${name}" onkeyup="processMarkDown(this, event);">${content}</textarea>
+        <textarea ${textarea.autoFocus} class="md-editor__data" data-upper="false" id="${textarea.id}" name="${textarea.name}" onkeyup="processMarkDown(this, event);">${textarea.value}</textarea>
         <output class="md-editor__output"></output>
     </div>
     <div class="md-editor__help">
@@ -91,8 +92,11 @@ function init(content, focus, id, name) {
             <h4>Identação</h4>
             <p>Para identar os códigos utilize quatro espaços.</p>
         </div>
-    </div>
-`};
+    </div>`
+    editor.innerHTML = html;
+    textarea.parentNode.insertBefore(editor, textarea);
+    textarea.style.display = 'none';
+};
 
 const REGEX_P = new RegExp('^(.+)$', 'gim');
 const REGEX_STRONG = new RegExp('(([*]{2})([a-z\\s\\w\\d\\.\\-]+)([*]{2}))', 'gim');
@@ -110,6 +114,27 @@ const REGEX_BLOCKQUOTE = new RegExp('(([\\>]\\s)([^\\<]+))', 'gim');
 const REGEX_CODE = new RegExp('(([`]{3})([\\sA-Z\\-]*)([\\w\\W\\s\\S\\n\\r\\d\\D]+)([`]{3}))', 'gim');
 
 const KEYCODE_TAB = 9;
+
+/** @auth Matheus Castiglioni
+ *  Função para pegar o markdown do banco de dados e converte-lo para as tags HTML
+ */
+const inits = document.querySelectorAll('.md-editor__init')
+if (inits.length > 0) {
+    inits.forEach(init => {
+        build(init);
+        insertOutput(init, processMarkDownTags(init.value));        
+    });
+}
+
+/** @auth Matheus Castiglioni
+ *  Função para pegar o markdown do banco de dados e converte-lo para as tags HTML
+ */
+const bases = document.querySelectorAll('.md-editor__base')
+if (bases.length > 0) {
+    bases.forEach(base => {
+        insertOutput(base, processMarkDownTags(base.textContent));        
+    });
+}
 
 /** @auth Matheus Castiglioni
  *  Processa cada digitação do editor
@@ -141,16 +166,6 @@ function processMarkDownTags(value) {
 }
 
 /** @auth Matheus Castiglioni
- *  Função para iniciar o markdown
- */
-const editors = document.querySelectorAll('.md-editor')
-if (editors.length > 0) {
-    editors.forEach(editor => {
-        editor.innerHTML = init(editor.dataset.editorContent, editor.dataset.editorFocus, editor.dataset.editorId, editor.dataset.editorName);
-    });
-}
-
-/** @auth Matheus Castiglioni
  *  Função para pegar a posição do cursor no textarea e inserir os markdowns
  */
 const datas = document.querySelectorAll('.md-editor__data');
@@ -168,16 +183,6 @@ if (datas.length > 0) {
                 insertIdentation(editor);
             }
         });
-    });
-}
-
-/** @auth Matheus Castiglioni
- *  Função para pegar o markdown do banco de dados e converte-lo para as tags HTML
- */
-const bases = document.querySelectorAll('.md-editor__base')
-if (bases.length > 0) {
-    bases.forEach(base => {
-        insertOutput(base, processMarkDownTags(base.textContent));        
     });
 }
 
@@ -495,4 +500,13 @@ function insertMarkDown(editor, markdownBegin, markdownEnd, positionBegin, posit
  */
 function hasTextSelected(begin , end) {
     return begin != end;
+}
+
+/** @auth Matheus Castiglioni
+ *  Cria a div que ira englobar todos os componentes do editor
+ */
+function buildEditor() {
+    let editor = document.createElement('DIV');
+    editor.classList.add('md-editor');
+    return editor;
 }
