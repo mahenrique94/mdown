@@ -88,9 +88,7 @@ function build(textarea) {
             <p>\`\`\` language-xxxx</p>
             <p>// insira seu código aqui</p>
             <p>\`\`\`</p>
-            <p><strong>Obs:</strong> Troque "xxxx" pelo nome da linguagem que você esta postando código.</p>
-            <h4>Identação</h4>
-            <p>Para identar os códigos utilize quatro espaços.</p>
+            <p><strong>Obs:</strong> Troque "xxxx" pelo nome da linguagem que você esta postando o código.</p>
         </div>
     </div>`;
     wrap.innerHTML = html;
@@ -113,6 +111,7 @@ const REGEX_IMG = new RegExp('(([!])([\\[])(.+)([\\]])([(])(.+)([)]))', 'gim');
 const REGEX_IFRAME = new RegExp('(([?])([\\[])(.+)([\\]])([(])(.+)([)]))', 'gim');
 const REGEX_BLOCKQUOTE = new RegExp('(([\\>]\\s)([^\\<]+))', 'gim');
 const REGEX_CODE = new RegExp('(([`]{3})([\\sA-Z\\-]*)([\\w\\W\\s\\S\\n\\r\\d\\D]+)([`]{3}))', 'gim');
+const REGEX_IDENTATION = new RegExp('([\t])', 'gim');
 
 const KEYCODE_TAB = 9;
 
@@ -149,8 +148,8 @@ function processMarkDown(editor, event) {
  */
 function processMarkDownTags(value) {
     let html = value;
-    html = markDownP(html);
     html = markDownBlockquote(html);
+    html = markDownP(html);
     html = markDownStrong(html);
     html = markDownEM(html);
     html = markDownH6(html);
@@ -163,6 +162,7 @@ function processMarkDownTags(value) {
     html = markDownIframe(html);
     html = markDownA(html);
     html = markDownCode(html);
+    html = markDownIdentation(html);
     return html;
 }
 
@@ -305,10 +305,20 @@ function markDownBlockquote(html) {
 }
 
 /** @auth Matheus Castiglioni
- *  Processa o markdown da tag code inline
+ *  Processa o markdown da identação do código
  */
 function markDownCode(html) {
-    return html.replace(REGEX_CODE, '<pre class="$3 language-xxxx"><code class="$3 language-xxxx">$4</code></pre>');
+    return html.replace(REGEX_IDENTATION, '&nbsp;&nbsp;&nbsp;&nbsp;');
+}
+
+/** @auth Matheus Castiglioni
+ *  Processa o markdown da tag code inline
+ */
+function markDownIdentation(html) {
+    let code = html.replace(REGEX_CODE, '$4');
+    code = code.replace(/[\\<]/g, '&lt;').replace(/[\\>]/g, '&gt;');
+    html = html.replace(REGEX_CODE, `<pre class="$3 language-xxxx"><code class="$3 language-xxxx">${code}</code></pre>`);
+    return html;
 }
 
 /** @auth Matheus Castiglioni
@@ -476,7 +486,7 @@ function insertListOrdered(button) {
 function insertCode(button) {
     const editor = button.parentNode.parentNode.parentNode.parentNode.querySelector('.md-editor__data');
     if (editor)
-        insertMarkDown(editor, '```\ninsira seu código aqui\n', '```', EDITOR_CURSOR_POSITION_BEGIN, EDITOR_CURSOR_POSITION_END, 26);
+        insertMarkDown(editor, '```\n// insira seu código aqui\n', '```', EDITOR_CURSOR_POSITION_BEGIN, EDITOR_CURSOR_POSITION_END, 29);
 }
 
 /** @auth Matheus Castiglioni
