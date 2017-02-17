@@ -76,18 +76,18 @@ function build(textarea) {
         </div>
         <div class="md-editor__info">
             <h2 class="md-editor__title">Como inserir uma citação</h2>
-            <p>> Digite aqui a citação</p>
+            <p>\` Digite aqui a citação</p>
         </div>
         <div class="md-editor__info">
             <h2 class="md-editor__title">Como inserir códigos</h2>
             <h4>Sem formatação</h4>
-            <p>\`\`\`</p>
+            <p>[code]</p>
             <p>// insira seu código aqui</p>
-            <p>\`\`\`</p>
+            <p>[/code]</p>
             <h4>Com formatação</h4>
-            <p>\`\`\` language-xxxx</p>
+            <p>[code language-xxxx]</p>
             <p>// insira seu código aqui</p>
-            <p>\`\`\`</p>
+            <p>[/code]</p>
             <p><strong>Obs:</strong> Troque "xxxx" pelo nome da linguagem que você esta postando o código.</p>
         </div>
     </div>`;
@@ -109,8 +109,8 @@ const REGEX_H6 = new RegExp('(([#]{6}\\s)([^\\<]+))', 'gim');
 const REGEX_A = new RegExp('(([\\[])(.+)([\\]])([(])(.+)([)]))', 'gim');
 const REGEX_IMG = new RegExp('(([!])([\\[])(.+)([\\]])([(])(.+)([)]))', 'gim');
 const REGEX_IFRAME = new RegExp('(([?])([\\[])(.+)([\\]])([(])(.+)([)]))', 'gim');
-const REGEX_BLOCKQUOTE = new RegExp('(([\\>]\\s)([^\\<\\n]+))', 'gim');
-const REGEX_CODE = new RegExp('(([`]{3})([\\sA-Z\\-]*)([\\w\\W\\s\\S\\n\\r\\d\\D]+)([`]{3}))', 'gim');
+const REGEX_BLOCKQUOTE = new RegExp('(([\\`]\\s)([^\\<\\n]+))', 'gim');
+const REGEX_CODE = new RegExp('(([\\[])([c][o][d][e])([\\sA-Z\\-]*)([\\]])([\\w\\W\\s\\S\\n\\r\\d\\D]+)([\\[])([\\/])([c][o][d][e])([\\]]))', 'gim');
 const REGEX_IDENTATION = new RegExp('([\t])', 'gim');
 
 const KEYCODE_TAB = 9;
@@ -308,7 +308,7 @@ function markDownBlockquote(html) {
  *  Processa o markdown da tag code inline
  */
 function markDownCode(html) {
-    let code = html.replace(REGEX_CODE, '$4');
+    let code = html.replace(REGEX_CODE, '$6');
     code = code.replace(new RegExp('(([\\<])([a-z\\d]+)([\\s])([c][l][a][s]{2})([\\=])([\\"])([m][d])([\\-])([e][d][i][t][o][r])([\\_]{2})([a-z\\d]+)([\\"])([\\>])(.*)([\\<])([\\/])([a-z\\d]+)([\\>]))', 'gim'), '$15');
     code = code.replace(new RegExp('(([\\<])([a-z\\d]+)([\\s])([c][l][a][s]{2})([\\=])([\\"])([m][d])([\\-])([e][d][i][t][o][r])([\\_]{2})([a-z\\d]+)([\\"])([\\>])(.*)([\\<])([\\/])([a-z\\d]+)([\\>]))', 'gim'), '');
     code = code.replace(/[\\<]/g, '&lt;').replace(/[\\>]/g, '&gt;');
@@ -489,7 +489,7 @@ function insertListOrdered(button) {
 function insertCode(button) {
     const editor = button.parentNode.parentNode.parentNode.parentNode.querySelector('.md-editor__data');
     if (editor)
-        insertMarkDown(editor, '```\n// insira seu código aqui\n', '```', EDITOR_CURSOR_POSITION_BEGIN, EDITOR_CURSOR_POSITION_END, 29);
+        insertMarkDown(editor, '[code]\n// insira seu código aqui\n', '[/code]', EDITOR_CURSOR_POSITION_BEGIN, EDITOR_CURSOR_POSITION_END, 32);
 }
 
 /** @auth Matheus Castiglioni
