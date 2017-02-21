@@ -98,8 +98,8 @@ function build(textarea) {
 };
 
 const REGEX_P = new RegExp('^(.+)$', 'gim');
-const REGEX_STRONG = new RegExp('(([*]{2})([a-z\\s\\w\\d\\.\\-\\|\\(\\)\\[\\]\\*\\$\\\'\\"\\`\\/\\@\\;\\,]+)([*]{2}))', 'gim');
-const REGEX_EM = new RegExp('(([_])([a-z\\s\\d\\.\\-\\|\\(\\)\\[\\]\\*\\$\\\'\\"\\`\\/\\@\\;\\,]+)([_]))', 'gim');
+const REGEX_STRONG = new RegExp('(([*]{2})([a-z\\s\\w\\d\\.\\-\\|\\(\\)\\[\\]\\*\\$\\\'\\"\\`\\/\\@\\;\\,áàâãéèêíïóôõöúçñ]+)([*]{2}))', 'gim');
+const REGEX_EM = new RegExp('(([_])([ña-z\\s\\d\\.\\-\\|\\(\\)\\[\\]\\*\\$\\\'\\"\\`\\/\\@\\;\\,áàâãéèêíïóôõöúçñ]+)([_]))', 'gim');
 const REGEX_H1 = new RegExp('(([#]\\s)([^\\<]+))', 'gim');
 const REGEX_H2 = new RegExp('(([#]{2}\\s)([^\\<]+))', 'gim');
 const REGEX_H3 = new RegExp('(([#]{3}\\s)([^\\<]+))', 'gim');
