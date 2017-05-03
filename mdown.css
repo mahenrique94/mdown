@@ -60,6 +60,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Textarea que irá receber a digitação e elemento que irá mostrar a digitação formatada */
 .md-editor__data, .md-editor__output {
+	background: #FFFFFF;
     border: none;
     box-sizing: border-box;
     color: #808080;
