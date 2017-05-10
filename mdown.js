@@ -2,29 +2,29 @@
  *  Editor que faz uso do markdown
  */
 function build(textarea) {
-    let wrap = buildWrap();
+    const wrap = buildWrap();
 	const html = `
     <aside class="md-editor__toolbar">
         <ul class="md-editor__menu">
             <li class="md-editor__item"><button class="md-editor__action" onclick="insertBold(this);" role="button" title="Negrito" type="button"><i class="icon-bold"></i></button></li>
-            <li class="md-editor__item"><button class="md-editor__action" onclick="insertItalic(this);" role="button" title="Itálico" type="button"><i class="icon-italic"></i></button></li>
+            <li class="md-editor__item"><button class="md-editor__action" onclick="insertItalic(this);" role="button" title="Italico" type="button"><i class="icon-italic"></i></button></li>
             <li class="md-editor__item"><button class="md-editor__action" onclick="showSubMenu(this);" role="button" title="Header" type="button"><i class="icon-header"></i></button>
                 <ul class="md-editor__submenu">
-                    <li class="md-editor__subitem"><button class="md-editor__action" onclick="insertH1(this);" role="button" type="button"><h1>Header</h1></button></li>
-                    <li class="md-editor__subitem"><button class="md-editor__action" onclick="insertH2(this);" role="button" type="button"><h2>Header</h2></button></li>
-                    <li class="md-editor__subitem"><button class="md-editor__action" onclick="insertH3(this);" role="button" type="button"><h3>Header</h3></button></li>
-                    <li class="md-editor__subitem"><button class="md-editor__action" onclick="insertH4(this);" role="button" type="button"><h4>Header</h4></button></li>
-                    <li class="md-editor__subitem"><button class="md-editor__action" onclick="insertH5(this);" role="button" type="button"><h5>Header</h5></button></li>
-                    <li class="md-editor__subitem"><button class="md-editor__action" onclick="insertH6(this);" role="button" type="button"><h6>Header</h6></button></li>
+                    <li class="md-editor__subitem"><button class="md-editor__action" onclick="insertH1(this);" role="button" title="Header 1" type="button"><h1>Header</h1></button></li>
+                    <li class="md-editor__subitem"><button class="md-editor__action" onclick="insertH2(this);" role="button" title="Header 2" type="button"><h2>Header</h2></button></li>
+                    <li class="md-editor__subitem"><button class="md-editor__action" onclick="insertH3(this);" role="button" title="Header 3" type="button"><h3>Header</h3></button></li>
+                    <li class="md-editor__subitem"><button class="md-editor__action" onclick="insertH4(this);" role="button" title="Header 4" type="button"><h4>Header</h4></button></li>
+                    <li class="md-editor__subitem"><button class="md-editor__action" onclick="insertH5(this);" role="button" title="Header 5" type="button"><h5>Header</h5></button></li>
+                    <li class="md-editor__subitem"><button class="md-editor__action" onclick="insertH6(this);" role="button" title="Header 6" type="button"><h6>Header</h6></button></li>
                 </ul>
             </li>
             <li class="md-editor__item"><button class="md-editor__action" onclick="insertLink(this);" role="button" title="Link" type="button"><i class="icon-link"></i></button></li>
             <li class="md-editor__item"><button class="md-editor__action" onclick="insertList(this);" role="button" title="Lista" type="button"><i class="icon-list-bullet"></i></button>
             <li class="md-editor__item"><button class="md-editor__action" onclick="insertListOrdered(this);" role="button" title="Lista Ordenada" type="button"><i class="icon-list-numbered"></i></button>
             <li class="md-editor__item"><button class="md-editor__action" onclick="insertPicture(this);" role="button" title="Imagem" type="button"><i class="icon-picture"></i></button>
-            <li class="md-editor__item"><button class="md-editor__action" onclick="insertVideo(this);" role="button" title="Vídeo" type="button"><i class="icon-videocam"></i></button>
-            <li class="md-editor__item"><button class="md-editor__action" onclick="insertCitation(this);" role="button" title="Citação'" type="button"><i class="icon-quote-left"></i></button></li>
-            <li class="md-editor__item"><button class="md-editor__action" onclick="insertCode(this);" role="button" title="Código" type="button"><i class="icon-code"></i></button>
+            <li class="md-editor__item"><button class="md-editor__action" onclick="insertVideo(this);" role="button" title="Video" type="button"><i class="icon-videocam"></i></button>
+            <li class="md-editor__item"><button class="md-editor__action" onclick="insertCitation(this);" role="button" title="Citacao'" type="button"><i class="icon-quote-left"></i></button></li>
+            <li class="md-editor__item"><button class="md-editor__action" onclick="insertCode(this);" role="button" title="Codigo" type="button"><i class="icon-code"></i></button>
         </ul>
         <ul class="md-editor__menu">
             <li class="md-editor__item"><button class="md-editor__action" onclick="expand(this);" role="button" title="Expandir" type="button"><i class="icon-resize-horizontal"></i></button></li>
@@ -37,13 +37,13 @@ function build(textarea) {
     </div>
     <div class="md-editor__help">
         <div class="md-editor__info">
-            <h2 class="md-editor__title">Formatação básica</h2>
+            <h2 class="md-editor__title">Formatacao basica</h2>
             <p>**negrito**</p>
-            <p>_itálico_</p>
-            <p>**negrito e _itálico_**</p>
+            <p>_italico_</p>
+            <p>**negrito e _italico_**</p>
         </div>
         <div class="md-editor__info">
-            <h2 class="md-editor__title">Como inserir títulos</h2>
+            <h2 class="md-editor__title">Como inserir titulos</h2>
             <p># H1</p>
             <p>## H2</p>
             <p>### H3</p>
@@ -53,7 +53,7 @@ function build(textarea) {
         </div>
         <div class="md-editor__info">
             <h2 class="md-editor__title">Como inserir links</h2>
-            <p>[Nome do link](http://www.globo.com)</p>
+            <p>[Nome do link](http://www.exemplo.com.br)</p>
         </div>
         <div class="md-editor__info">
             <h2 class="md-editor__title">Como inserir listas</h2>
@@ -75,20 +75,22 @@ function build(textarea) {
             <p>?[Nome do vídeo](URL)</p>
         </div>
         <div class="md-editor__info">
-            <h2 class="md-editor__title">Como inserir uma citação</h2>
-            <p>\` Digite aqui a citação</p>
+            <h2 class="md-editor__title">Como inserir uma citacao</h2>
+            <p>\` Digite aqui a citacao</p>
         </div>
         <div class="md-editor__info">
-            <h2 class="md-editor__title">Como inserir códigos</h2>
-            <h4>Sem formatação</h4>
+            <h2 class="md-editor__title">Como inserir codigos</h2>
+            <h4>Sem formatacao</h4>
             <p>[code]</p>
-            <p>// insira seu código aqui</p>
+            <p>// insira seu codigo aqui</p>
             <p>[/code]</p>
-            <h4>Com formatação</h4>
+            <br/>
+            <h4>Com formatacao</h4>
             <p>[code language-xxxx]</p>
-            <p>// insira seu código aqui</p>
+            <p>// insira seu codigo aqui</p>
             <p>[/code]</p>
-            <p><strong>Obs:</strong> Troque "xxxx" pelo nome da linguagem que você esta postando o código.</p>
+            <br/>
+            <p><strong>Obs:</strong> Troque "xxxx" pelo nome da linguagem que voce esta postando o codigo.</p>
         </div>
     </div>`;
     wrap.innerHTML = html;
@@ -121,7 +123,7 @@ const KEYCODE_TAB = 9;
 const inits = document.querySelectorAll('.md-editor__init')
 if (inits.length > 0) {
     inits.forEach(init => {
-        let editor = build(init);
+        const editor = build(init);
         insertOutput(editor, processMarkDownTags(editor.value));
     });
 }
@@ -131,9 +133,7 @@ if (inits.length > 0) {
  */
 const bases = document.querySelectorAll('.md-editor__base')
 if (bases.length > 0) {
-    bases.forEach(base => {
-        insertOutput(base, processMarkDownTags(base.textContent));        
-    });
+    bases.forEach(base => insertOutput(base, processMarkDownTags(base.textContent)));
 }
 
 /** @auth Matheus Castiglioni
@@ -325,22 +325,22 @@ function markDownIdentation(html) {
 }
 
 /** @auth Matheus Castiglioni
- *  Mostra o submenu com mais opção para o editor 
- */
-function showSubMenu(button) {
-    let subMenu = button.parentNode.querySelector('ul');
-    if (subMenu != undefined)
-        showHideElement(subMenu);
-}
-
-/** @auth Matheus Castiglioni
  *  Mostra e esconde determinado elemento 
  */
-function showHideElement(element) {
+function toggleElement(element) {
     if (isHide(element))
         element.style.display = 'block';
     else
         element.style.display = 'none';
+}
+
+/** @auth Matheus Castiglioni
+ *  Mostra o submenu com mais opção para o editor 
+ */
+function showSubMenu(button) {
+    const subMenu = button.parentNode.querySelector('ul');
+    if (subMenu)
+        toggleElement(subMenu);
 }
 
 /** @auth Matheus Castiglioni
@@ -354,9 +354,9 @@ function isHide(element) {
  *  Mostra e esconde o preview da digitação 
  */
 function expand(button) {
-    let data = button.parentNode.parentNode.parentNode.parentNode.querySelector('textarea');
-    let output = button.parentNode.parentNode.parentNode.parentNode.querySelector('output');
-    if (data != undefined && output != undefined) {
+    const data = button.parentNode.parentNode.parentNode.parentNode.querySelector('textarea');
+    const output = button.parentNode.parentNode.parentNode.parentNode.querySelector('output');
+    if (data && output) {
         data.classList.toggle('is-full');
         output.classList.toggle('is-hide');
     }
@@ -366,9 +366,9 @@ function expand(button) {
  *  Mostra e esconde as dicas de formatação do mark down 
  */
 function help(button) {
-    let help = button.parentNode.parentNode.parentNode.parentNode.querySelector('.md-editor__help');
-    if (help != undefined)
-        showHideElement(help);
+    const help = button.parentNode.parentNode.parentNode.parentNode.querySelector('.md-editor__help');
+    if (help)
+        toggleElement(help);
 }
 
 /** @auth Matheus Castiglioni
@@ -396,37 +396,37 @@ function insertH1(button) {
     const editor = button.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('.md-editor__data');
     if (editor)
         insertMarkDown(editor, '# ', null, EDITOR_CURSOR_POSITION_BEGIN, EDITOR_CURSOR_POSITION_END, 2);  
-    showHideElement(button.parentNode.parentNode);
+    toggleElement(button.parentNode.parentNode);
 }
 function insertH2(button) {
     const editor = button.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('.md-editor__data');
     if (editor)
         insertMarkDown(editor, '## ', null, EDITOR_CURSOR_POSITION_BEGIN, EDITOR_CURSOR_POSITION_END, 3);  
-    showHideElement(button.parentNode.parentNode);
+    toggleElement(button.parentNode.parentNode);
 }
 function insertH3(button) {
     const editor = button.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('.md-editor__data');
     if (editor)
         insertMarkDown(editor, '### ', null, EDITOR_CURSOR_POSITION_BEGIN, EDITOR_CURSOR_POSITION_END, 4);  
-    showHideElement(button.parentNode.parentNode);
+    toggleElement(button.parentNode.parentNode);
 }
 function insertH4(button) {
     const editor = button.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('.md-editor__data');
     if (editor)
         insertMarkDown(editor, '#### ', null, EDITOR_CURSOR_POSITION_BEGIN, EDITOR_CURSOR_POSITION_END, 5);  
-    showHideElement(button.parentNode.parentNode);
+    toggleElement(button.parentNode.parentNode);
 }
 function insertH5(button) {
     const editor = button.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('.md-editor__data');
     if (editor)
         insertMarkDown(editor, '##### ', null, EDITOR_CURSOR_POSITION_BEGIN, EDITOR_CURSOR_POSITION_END, 6);  
-    showHideElement(button.parentNode.parentNode);
+    toggleElement(button.parentNode.parentNode);
 }
 function insertH6(button) {
     const editor = button.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('.md-editor__data');
     if (editor)
         insertMarkDown(editor, '###### ', null, EDITOR_CURSOR_POSITION_BEGIN, EDITOR_CURSOR_POSITION_END, 7);  
-    showHideElement(button.parentNode.parentNode);
+    toggleElement(button.parentNode.parentNode);
 }
 
 /** @auth Matheus Castiglioni
@@ -520,7 +520,7 @@ function hasTextSelected(begin , end) {
  *  Cria a div que ira englobar todos os componentes do editor
  */
 function buildWrap() {
-    let wrap = document.createElement('DIV');
+    const wrap = document.createElement('DIV');
     wrap.classList.add('md-editor');
     return wrap;
 }
