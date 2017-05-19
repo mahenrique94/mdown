@@ -60,6 +60,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Textarea que irá receber a digitação e elemento que irá mostrar a digitação formatada */
 .md-editor__data, .md-editor__output {
+	background: #FFFFFF;
     border: none;
     box-sizing: border-box;
     color: #808080;
@@ -82,9 +83,6 @@ h1, h2, h3, h4, h5, h6 {
 .md-editor__data:focus {
     outline: none;
 }
-.md-editor__output.is-hide {
-    display: none;
-}
 
 /* Formatando tags no output */
 .md-editor__output strong {
@@ -100,8 +98,8 @@ h1, h2, h3, h4, h5, h6 {
 .md-editor__help {
     background: #595959;
     box-sizing: border-box;
-    display: none;
     color: #F2F2F2;
+    display: none;
     font-weight: 100;
     height: 300px;
     overflow-x: auto;

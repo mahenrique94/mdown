@@ -6,23 +6,23 @@ function build(textarea) {
     <aside class="md-editor__toolbar">
         <ul class="md-editor__menu">
             <li class="md-editor__item"><button class="md-editor__action" onclick="insertBold(this);" role="button" title="Negrito" type="button"><i class="icon-bold"></i></button></li>
-            <li class="md-editor__item"><button class="md-editor__action" onclick="insertItalic(this);" role="button" title="Itálico" type="button"><i class="icon-italic"></i></button></li>
+            <li class="md-editor__item"><button class="md-editor__action" onclick="insertItalic(this);" role="button" title="Italico" type="button"><i class="icon-italic"></i></button></li>
             <li class="md-editor__item"><button class="md-editor__action" onclick="showSubMenu(this);" role="button" title="Header" type="button"><i class="icon-header"></i></button>
                 <ul class="md-editor__submenu">
-                    <li class="md-editor__subitem"><button class="md-editor__action" onclick="insertH1(this);" role="button" type="button"><h1>Header</h1></button></li>
-                    <li class="md-editor__subitem"><button class="md-editor__action" onclick="insertH2(this);" role="button" type="button"><h2>Header</h2></button></li>
-                    <li class="md-editor__subitem"><button class="md-editor__action" onclick="insertH3(this);" role="button" type="button"><h3>Header</h3></button></li>
-                    <li class="md-editor__subitem"><button class="md-editor__action" onclick="insertH4(this);" role="button" type="button"><h4>Header</h4></button></li>
-                    <li class="md-editor__subitem"><button class="md-editor__action" onclick="insertH5(this);" role="button" type="button"><h5>Header</h5></button></li>
-                    <li class="md-editor__subitem"><button class="md-editor__action" onclick="insertH6(this);" role="button" type="button"><h6>Header</h6></button></li>
+                    <li class="md-editor__subitem"><button class="md-editor__action" onclick="insertH1(this);" role="button" title="Header 1" type="button"><h1>Header</h1></button></li>
+                    <li class="md-editor__subitem"><button class="md-editor__action" onclick="insertH2(this);" role="button" title="Header 2" type="button"><h2>Header</h2></button></li>
+                    <li class="md-editor__subitem"><button class="md-editor__action" onclick="insertH3(this);" role="button" title="Header 3" type="button"><h3>Header</h3></button></li>
+                    <li class="md-editor__subitem"><button class="md-editor__action" onclick="insertH4(this);" role="button" title="Header 4" type="button"><h4>Header</h4></button></li>
+                    <li class="md-editor__subitem"><button class="md-editor__action" onclick="insertH5(this);" role="button" title="Header 5" type="button"><h5>Header</h5></button></li>
+                    <li class="md-editor__subitem"><button class="md-editor__action" onclick="insertH6(this);" role="button" title="Header 6" type="button"><h6>Header</h6></button></li>
                 </ul>
             </li>
             <li class="md-editor__item"><button class="md-editor__action" onclick="insertLink(this);" role="button" title="Link" type="button"><i class="icon-link"></i></button></li>
             <li class="md-editor__item"><button class="md-editor__action" onclick="insertListOrdered(this);" role="button" title="Lista Ordenada" type="button"><i class="icon-list-numbered"></i></button>
             <li class="md-editor__item"><button class="md-editor__action" onclick="insertPicture(this);" role="button" title="Imagem" type="button"><i class="icon-picture"></i></button>
-            <li class="md-editor__item"><button class="md-editor__action" onclick="insertVideo(this);" role="button" title="Vídeo" type="button"><i class="icon-videocam"></i></button>
-            <li class="md-editor__item"><button class="md-editor__action" onclick="insertCitation(this);" role="button" title="Citação'" type="button"><i class="icon-quote-left"></i></button></li>
-            <li class="md-editor__item"><button class="md-editor__action" onclick="insertCode(this);" role="button" title="Código" type="button"><i class="icon-code"></i></button>
+            <li class="md-editor__item"><button class="md-editor__action" onclick="insertVideo(this);" role="button" title="Video" type="button"><i class="icon-videocam"></i></button>
+            <li class="md-editor__item"><button class="md-editor__action" onclick="insertCitation(this);" role="button" title="Citacao'" type="button"><i class="icon-quote-left"></i></button></li>
+            <li class="md-editor__item"><button class="md-editor__action" onclick="insertCode(this);" role="button" title="Codigo" type="button"><i class="icon-code"></i></button>
         </ul>
         <ul class="md-editor__menu">
             <li class="md-editor__item"><button class="md-editor__action" onclick="expand(this);" role="button" title="Expandir" type="button"><i class="icon-resize-horizontal"></i></button></li>
@@ -35,13 +35,13 @@ function build(textarea) {
     </div>
     <div class="md-editor__help">
         <div class="md-editor__info">
-            <h2 class="md-editor__title">Formatação básica</h2>
+            <h2 class="md-editor__title">Formatacao basica</h2>
             <p>**negrito**</p>
             <p>__itálico__</p>
             <p>**negrito e __itálico__**</p>
         </div>
         <div class="md-editor__info">
-            <h2 class="md-editor__title">Como inserir títulos</h2>
+            <h2 class="md-editor__title">Como inserir titulos</h2>
             <p># H1</p>
             <p>## H2</p>
             <p>### H3</p>
@@ -51,7 +51,7 @@ function build(textarea) {
         </div>
         <div class="md-editor__info">
             <h2 class="md-editor__title">Como inserir links</h2>
-            <p>[Nome do link](http://www.globo.com)</p>
+            <p>[Nome do link](http://www.exemplo.com.br)</p>
         </div>
         <div class="md-editor__info">
             <h2 class="md-editor__title">Como inserir listas</h2>
@@ -77,10 +77,10 @@ function build(textarea) {
             <p>> Digite aqui a citação</p>
         </div>
         <div class="md-editor__info">
-            <h2 class="md-editor__title">Como inserir códigos</h2>
-            <h4>Sem formatação</h4>
+            <h2 class="md-editor__title">Como inserir codigos</h2>
+            <h4>Sem formatacao</h4>
             <p>[code]</p>
-            <p>// insira seu código aqui</p>
+            <p>// insira seu codigo aqui</p>
             <p>[/code]</p>
             <h4>Com formatação</h4>
             <p>[code-language]</p>
@@ -482,6 +482,15 @@ function toggleElement(element) {
 }
 
 /** @auth Matheus Castiglioni
+ *  Mostra o submenu com mais opção para o editor 
+ */
+function showSubMenu(button) {
+    const subMenu = button.parentNode.querySelector('ul');
+    if (subMenu)
+        toggleElement(subMenu);
+}
+
+/** @auth Matheus Castiglioni
  *  Verifica se um elemento esta escondido ou visível
  */
 function isHide(element) {
@@ -652,4 +661,13 @@ function insertMarkDown(editor, markdownBegin, markdownEnd, positionBegin, posit
  */
 function hasTextSelected(begin , end) {
     return begin != end;
+}
+
+/** @auth Matheus Castiglioni
+ *  Cria a div que ira englobar todos os componentes do editor
+ */
+function buildWrap() {
+    const wrap = document.createElement('DIV');
+    wrap.classList.add('md-editor');
+    return wrap;
 }
