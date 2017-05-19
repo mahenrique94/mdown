@@ -2,8 +2,7 @@
  *  Editor que faz uso do markdown
  */
 function build(textarea) {
-    let wrap = buildWrap();
-	const html = `
+    const html = `
     <aside class="md-editor__toolbar">
         <ul class="md-editor__menu">
             <li class="md-editor__item"><button class="md-editor__action" onclick="insertBold(this);" role="button" title="Negrito" type="button"><i class="icon-bold"></i></button></li>
@@ -19,7 +18,6 @@ function build(textarea) {
                 </ul>
             </li>
             <li class="md-editor__item"><button class="md-editor__action" onclick="insertLink(this);" role="button" title="Link" type="button"><i class="icon-link"></i></button></li>
-            <li class="md-editor__item"><button class="md-editor__action" onclick="insertList(this);" role="button" title="Lista" type="button"><i class="icon-list-bullet"></i></button>
             <li class="md-editor__item"><button class="md-editor__action" onclick="insertListOrdered(this);" role="button" title="Lista Ordenada" type="button"><i class="icon-list-numbered"></i></button>
             <li class="md-editor__item"><button class="md-editor__action" onclick="insertPicture(this);" role="button" title="Imagem" type="button"><i class="icon-picture"></i></button>
             <li class="md-editor__item"><button class="md-editor__action" onclick="insertVideo(this);" role="button" title="Vídeo" type="button"><i class="icon-videocam"></i></button>
@@ -32,15 +30,15 @@ function build(textarea) {
         </ul>
     </aside>
     <div class="md-editor__wrap">
-        <textarea ${textarea.autofocus} class="md-editor__data" data-upper="false" id="${textarea.id}" name="${textarea.name}" onkeyup="processMarkDown(this, event);">${textarea.value}</textarea>
+        <textarea ${textarea.autofocus == true ? 'autofocus' : ''} class="md-editor__data" data-upper="false" id="${textarea.id}" name="${textarea.name}" onblur="getSelectionCursor(this);" onkeydown="processKey(event);" onkeyup="processMarkDown(this, event);">${textarea.value}</textarea>
         <output class="md-editor__output"></output>
     </div>
     <div class="md-editor__help">
         <div class="md-editor__info">
             <h2 class="md-editor__title">Formatação básica</h2>
             <p>**negrito**</p>
-            <p>_itálico_</p>
-            <p>**negrito e _itálico_**</p>
+            <p>__itálico__</p>
+            <p>**negrito e __itálico__**</p>
         </div>
         <div class="md-editor__info">
             <h2 class="md-editor__title">Como inserir títulos</h2>
@@ -76,7 +74,7 @@ function build(textarea) {
         </div>
         <div class="md-editor__info">
             <h2 class="md-editor__title">Como inserir uma citação</h2>
-            <p>\` Digite aqui a citação</p>
+            <p>> Digite aqui a citação</p>
         </div>
         <div class="md-editor__info">
             <h2 class="md-editor__title">Como inserir códigos</h2>
@@ -85,118 +83,353 @@ function build(textarea) {
             <p>// insira seu código aqui</p>
             <p>[/code]</p>
             <h4>Com formatação</h4>
-            <p>[code language-xxxx]</p>
+            <p>[code-language]</p>
             <p>// insira seu código aqui</p>
             <p>[/code]</p>
-            <p><strong>Obs:</strong> Troque "xxxx" pelo nome da linguagem que você esta postando o código.</p>
+            <p><strong>Obs:</strong> Troque "language" pelo nome da linguagem que você esta postando o código.</p>
         </div>
     </div>`;
-    wrap.innerHTML = html;
-    textarea.parentNode.insertBefore(wrap, textarea);
+    const editor = constroy();
+    editor.innerHTML = html;
+    textarea.parentNode.insertBefore(editor, textarea);
     textarea.remove();
-    return wrap.querySelector('.md-editor__data');
 };
 
-const REGEX_P = new RegExp('^(.+)$', 'gim');
-const REGEX_STRONG = new RegExp('(([*]{2})([a-z\\s\\w\\d\\.\\-\\|\\(\\)\\[\\]\\*\\$\\\'\\"\\`\\/\\@\\;\\,]+)([*]{2}))', 'gim');
-const REGEX_EM = new RegExp('(([_])([a-z\\s\\d\\.\\-\\|\\(\\)\\[\\]\\*\\$\\\'\\"\\`\\/\\@\\;\\,]+)([_]))', 'gim');
-const REGEX_H1 = new RegExp('(([#]\\s)([^\\<]+))', 'gim');
-const REGEX_H2 = new RegExp('(([#]{2}\\s)([^\\<]+))', 'gim');
-const REGEX_H3 = new RegExp('(([#]{3}\\s)([^\\<]+))', 'gim');
-const REGEX_H4 = new RegExp('(([#]{4}\\s)([^\\<]+))', 'gim');
-const REGEX_H5 = new RegExp('(([#]{5}\\s)([^\\<]+))', 'gim');
-const REGEX_H6 = new RegExp('(([#]{6}\\s)([^\\<]+))', 'gim');
-const REGEX_A = new RegExp('(([\\[])(.+)([\\]])([(])(.+)([)]))', 'gim');
-const REGEX_IMG = new RegExp('(([!])([\\[])(.+)([\\]])([(])(.+)([)]))', 'gim');
-const REGEX_IFRAME = new RegExp('(([?])([\\[])(.+)([\\]])([(])(.+)([)]))', 'gim');
-const REGEX_BLOCKQUOTE = new RegExp('(([\\`]\\s)([^\\<\\n]+))', 'gim');
-const REGEX_CODE = new RegExp('(([\\[])([c][o][d][e])([\\sA-Z\\-]*)([\\]])([\\w\\W\\s\\S\\n\\r\\d\\D]+)([\\[])([\\/])([c][o][d][e])([\\]]))', 'gim');
-const REGEX_IDENTATION = new RegExp('([\t])', 'gim');
+const SPLIT_SPACE = " ";
+const SPLIT_QUEBRA_LINHA = "\n";
+
+let EDITOR_CURSOR_POSITION_BEGIN;
+let EDITOR_CURSOR_POSITION_END;
+
+const REGEXP_P = new RegExp("^(.+)$", "gim");
+const REGEXP_BR = new RegExp("^([\\s]{0})$", "gim");
+const REGEXP_STRONG = new RegExp("(([*]{2})([0-9a-z]))", "gim");
+const REGEXP_STRONG_CLOSE = new RegExp("(([0-9a-z])([*]{2}))", "gim");
+const REGEXP_EM = new RegExp("^(([_]{2})([0-9a-z]))", "gim");
+const REGEXP_EM_CLOSE = new RegExp("(([0-9a-z])([_]{2}))", "gim");
+const REGEXP_H1 = new RegExp("^(([#])([\\s]*)(.+))", "gim");
+const REGEXP_H2 = new RegExp("^(([#]{2})([\\s]*)(.+))", "gim");
+const REGEXP_H3 = new RegExp("^(([#]{3})([\\s]*)(.+))", "gim");
+const REGEXP_H4 = new RegExp("^(([#]{4})([\\s]*)(.+))", "gim");
+const REGEXP_H5 = new RegExp("^(([#]{5})([\\s]*)(.+))", "gim");
+const REGEXP_H6 = new RegExp("^(([#]{6})([\\s]*)(.+))", "gim");
+const REGEXP_A = new RegExp("(([\\[])(.+)([\\]])([\\(])(.+)([\\)]))", "gim");
+const REGEXP_IMG = new RegExp("(([\\!])([\\[])(.+)([\\]])([\\(])(.+)([\\)]))", "gim");
+const REGEXP_VIDEO = new RegExp("(([\\?])([\\[])(.+)([\\]])([\\(])(.+)([\\)]))", "gim");
+const REGEXP_BLOCKQUOTE = new RegExp("^(([>])([\\s]*)(.+))", "gim");
+const REGEXP_CODE = new RegExp("^(([\\[])([c][o][d][e])([\\]]))$", "gim");
+const REGEXP_CODE_LANGUAGE = new RegExp("^(([\\[])([c][o][d][e])([\\-])([a-z]+)([\\]]))$", "gim");
+const REGEXP_CODE_CLOSE = new RegExp("^(([\\[])([\\/])([c][o][d][e])([\\]]))$", "gim");
+const REGEXP_CODE_INLINE = new RegExp("(([\\`]{3})([0-9a-z]))", "gim");
+const REGEXP_CODE_INLINE_CLOSE = new RegExp("(([0-9a-z])([\\`]{3}))", "gim");
+const REGEXP_TAB = new RegExp('([\\t])', 'gim');
+const REGEXP_UL = new RegExp("^(([\\-])([\\s]*)(.+))", "gim");
+
+const REGEXP_TAG_P = new RegExp("(([<])([p])([>]))", "gim");
+const REGEXP_TAG_STRONG = new RegExp("(([<])([s][t][r][o][n][g])([>]))", "gim");
+const REGEXP_TAG_EM = new RegExp("(([<])([e][m])([>]))", "gim");
+const REGEXP_TAG_H1 = new RegExp("(([<])([h][1])([>]))", "gim");
+const REGEXP_TAG_H2 = new RegExp("(([<])([h][2])([>]))", "gim");
+const REGEXP_TAG_H3 = new RegExp("(([<])([h][3])([>]))", "gim");
+const REGEXP_TAG_H4 = new RegExp("(([<])([h][4])([>]))", "gim");
+const REGEXP_TAG_H5 = new RegExp("(([<])([h][5])([>]))", "gim");
+const REGEXP_TAG_H6 = new RegExp("(([<])([h][6])([>]))", "gim");
+const REGEXP_TAG_A = new RegExp("(([<])([a])([\\s])([h][r][e][f]))", "gim");
+const REGEXP_TAG_IMG = new RegExp("(([<])([i][m][g])([\\s])([a][l][t]))", "gim");
+const REGEXP_TAG_VIDEO = new RegExp("(([<])([i][f][r][a][m][e])([\\s])([s][r][c]))", "gim");
+const REGEXP_TAG_BLOCKQUOTE = new RegExp("(([<])([b][l][o][c][k][q][u][o][t][e])([>]))", "gim");
+const REGEXP_TAG_UL = new RegExp("(([<])([u][l])([>]))", "gim");
+const REGEXP_TAG_LI = new RegExp("(([<])([l][i])([>]))", "gim");
 
 const KEYCODE_TAB = 9;
 
 /** @auth Matheus Castiglioni
- *  Função para pegar o markdown do banco de dados e converte-lo para as tags HTML
+ *  Criar a DIV que engloba todos os elementos do editor
  */
-const inits = document.querySelectorAll('.md-editor__init')
-if (inits.length > 0) {
-    inits.forEach(init => {
-        let editor = build(init);
-        insertOutput(editor, processMarkDownTags(editor.value));
-    });
+function constroy() {
+    const editor = document.createElement("DIV");
+    editor.classList.add("md-editor");
+    return editor;
 }
 
 /** @auth Matheus Castiglioni
- *  Função para pegar o markdown do banco de dados e converte-lo para as tags HTML
- */
-const bases = document.querySelectorAll('.md-editor__base')
-if (bases.length > 0) {
-    bases.forEach(base => {
-        insertOutput(base, processMarkDownTags(base.textContent));        
-    });
-}
-
-/** @auth Matheus Castiglioni
- *  Processa cada digitação do editor
+ *  Escutar cada digitação do editor
  */
 function processMarkDown(editor, event) {
-    insertOutput(editor, processMarkDownTags(editor.value));
+    insertOutPut(editor, compile(editor.value));
+    Prism.highlightAll();
+    scrollOutPut(editor);
 }
 
 /** @auth Matheus Castiglioni
- *  Processa cada tag markdown
+ *  Pegar o HTML gerado pelo MarkDown e inserir no preview do editor
  */
-function processMarkDownTags(value) {
-    let html = value;
-    html = markDownP(html);
-    html = markDownBlockquote(html);
-    html = markDownStrong(html);
-    html = markDownEM(html);
-    html = markDownH6(html);
-    html = markDownH5(html);
-    html = markDownH4(html);
-    html = markDownH3(html);
-    html = markDownH2(html);
-    html = markDownH1(html);
-    html = markDownIMG(html);
-    html = markDownIframe(html);
-    html = markDownA(html);
-    html = markDownCode(html);
-    html = markDownIdentation(html);
+const insertOutPut = (editor, html) => editor.nextElementSibling.innerHTML = html;
+
+/** @auth Matheus Castiglioni
+ *  Rolar automáticamente o preview de acordo com o seu crescimento
+ */
+const scrollOutPut = editor => editor.nextElementSibling.scrollTop = editor.nextElementSibling.clientHeight;
+
+/** @auth Matheus Castiglioni
+ *  Compiltar o MarkDown e gerar um HTML
+ */
+function compile(value) {
+    let html = "";
+    value = markDownUl(value);
+    const lines = replaceMarkDown(value.split(SPLIT_QUEBRA_LINHA));
+    for (let line of lines) {
+        html += line;
+    }
     return html;
 }
 
 /** @auth Matheus Castiglioni
- *  Função para pegar a posição do cursor no textarea e inserir os markdowns
+ *  Verificando linha á linha por marcações MarkDown e trocar para seu respectivo HTML
  */
-const datas = document.querySelectorAll('.md-editor__data');
-if (datas.length > 0) {
-    datas.forEach(editor => {
-    	editor.dispatchEvent(new Event('keyup'));
-        editor.addEventListener('blur', function() {
-            getSelectionCursor(this);
-        });
-        editor.addEventListener('keydown', function(event) {
-            getSelectionCursor(this);
-            if (event.keyCode == KEYCODE_TAB) {
-                event.preventDefault();
-                event.stopPropagation();
-                insertIdentation(editor);
-            }
-        });
-    });
+function replaceMarkDown(lines) {
+    for (let i = 0; i < lines.length; i++) {
+        lines[i] = markDownH6(lines[i]);
+        lines[i] = markDownH5(lines[i]);
+        lines[i] = markDownH4(lines[i]);
+        lines[i] = markDownH3(lines[i]);
+        lines[i] = markDownH2(lines[i]);
+        lines[i] = markDownH1(lines[i]);
+        lines[i] = markDownStrong(lines[i]);
+        lines[i] = markDownStrongClose(lines[i]);
+        lines[i] = markDownEm(lines[i]);
+        lines[i] = markDownEmClose(lines[i]);
+        lines[i] = markDownImg(lines[i]);
+        lines[i] = markDownVideo(lines[i]);
+        lines[i] = markDownA(lines[i]);
+        lines[i] = markDownBloquote(lines[i]);
+        lines[i] = markDownCodeLanguage(lines[i]);
+        lines[i] = markDownCode(lines[i]);
+        lines[i] = markDownCodeClose(lines[i]);
+        lines[i] = markDownCodeInline(lines[i]);
+        lines[i] = markDownCodeInlineClose(lines[i]);
+        lines[i] = markDownP(lines[i]);
+        lines[i] = markDownBr(lines[i]);
+        lines[i] = markDownTab(lines[i]);
+        lines[i] = insertClass(lines[i]);
+    }
+    return lines;
 }
 
 /** @auth Matheus Castiglioni
- *  Função para adicionar identação no textarea
+ *  Inserir Paragráfos
  */
-function insertIdentation(editor) {
-    editor.value = editor.value.substring(0, EDITOR_CURSOR_POSITION_BEGIN) + '\t' + editor.value.substring(EDITOR_CURSOR_POSITION_END, editor.value.length);
-    editor.setSelectionRange((EDITOR_CURSOR_POSITION_END + 1), (EDITOR_CURSOR_POSITION_END + 1));
+function markDownP(line) {
+    if (!line.startsWith("<h") && !line.startsWith("<img") && !line.startsWith("<iframe") && !line.startsWith("<blockquote") && !line.startsWith("<pre") && !line.startsWith("</code") && !line.startsWith("<ul") && !line.startsWith("<ol") && !line.startsWith("<li"))
+        return line.replace(REGEXP_P, "<p>$1</p>");
+    return line;
 }
 
 /** @auth Matheus Castiglioni
- *  Função para pegar a posição do cursor no textarea
+ *  Inserir quebras de linha
+ */
+const markDownBr = line => line.replace(REGEXP_BR, "<br/>");
+
+/** @auth Matheus Castiglioni
+ *  Inserir Negritos
+ */
+function markDownStrong(line) {
+    const words = line.split(SPLIT_SPACE);
+    for (let i = 0; i < words.length; i++) {
+        words[i] = words[i].replace(REGEXP_STRONG, "<strong>$3");
+    }
+    return words.join(" ");
+}
+
+/** @auth Matheus Castiglioni
+ *  Fechar Negritos
+ */
+function markDownStrongClose(line) {
+    const words = line.split(SPLIT_SPACE);
+    for (let i = 0; i < words.length; i++) {
+        words[i] = words[i].replace(REGEXP_STRONG_CLOSE, "$2</strong>");
+    }
+    return words.join(" ");
+}
+
+/** @auth Matheus Castiglioni
+ *  Inserir Itálicos
+ */
+function markDownEm(line) {
+    const words = line.split(SPLIT_SPACE);
+    for (let i = 0; i < words.length; i++) {
+        words[i] = words[i].replace(REGEXP_EM, "<em>$3");
+    }
+    return words.join(" ");
+}
+
+/** @auth Matheus Castiglioni
+ *  Fechar Itálicos
+ */
+function markDownEmClose(line) {
+    const words = line.split(SPLIT_SPACE);
+    for (let i = 0; i < words.length; i++) {
+        words[i] = words[i].replace(REGEXP_EM_CLOSE, "$2</em>");
+    }
+    return words.join(" ");
+}
+
+/** @auth Matheus Castiglioni
+ *  Inserir os Títulos de H1 á H6
+ */
+const markDownH1 = line => line.replace(REGEXP_H1, "<h1>$4</h1>");
+const markDownH2 = line => line.replace(REGEXP_H2, "<h2>$4</h2>");
+const markDownH3 = line => line.replace(REGEXP_H3, "<h3>$4</h3>");
+const markDownH4 = line => line.replace(REGEXP_H4, "<h4>$4</h4>");
+const markDownH5 = line => line.replace(REGEXP_H5, "<h5>$4</h5>");
+const markDownH6 = line => line.replace(REGEXP_H6, "<h6>$4</h6>");
+
+/** @auth Matheus Castiglioni
+ *  Inserir lista desordenada
+ */
+function markDownUl(value) {
+    value = value.replace(REGEXP_UL, "<li>$4</li>");
+    return value;
+}
+
+/** @auth Matheus Castiglioni
+ *  Inserir lista ordenada
+ */
+const markDownOl = line => line.replace(REGEXP_OL, "<ol>$4</ol>");
+
+/** @auth Matheus Castiglioni
+ *  Inserir Link
+ */
+function markDownA(line) {
+    const words = line.split(SPLIT_SPACE);
+    for (let i = 0; i < words.length; i++) {
+        words[i] = words[i].replace(REGEXP_A, "<a href=\"$6\" title=\"$3\" target='_blank'>$3</a>");
+    }
+    return words.join(" ");
+}
+
+/** @auth Matheus Castiglioni
+ *  Inserir Imagem
+ */
+function markDownImg(line) {
+    const words = line.split(SPLIT_SPACE);
+    for (let i = 0; i < words.length; i++) {
+        words[i] = words[i].replace(REGEXP_IMG, "<img alt=\"$4\" src=\"$7\">");
+    }
+    return words.join(" ");
+}
+
+/** @auth Matheus Castiglioni
+ *  Inserir Vídeo
+ */
+function markDownVideo(line) {
+    const words = line.split(SPLIT_SPACE);
+    for (let i = 0; i < words.length; i++) {
+        words[i] = words[i].replace(REGEXP_VIDEO, "<iframe src=\"$7\"></iframe>");
+    }
+    return words.join(" ");
+}
+
+/** @auth Matheus Castiglioni
+ *  Inserir os Citação
+ */
+const markDownBloquote = line => line.replace(REGEXP_BLOCKQUOTE, "<blockquote>$4</blockquote>");
+
+/** @auth Matheus Castiglioni
+ *  Inserir blocos de código sem formatação
+ */
+function markDownCode(line) {
+    const words = line.split(SPLIT_SPACE);
+    for (let i = 0; i < words.length; i++) {
+        words[i] = words[i].replace(REGEXP_CODE, "<pre class=\"language-xxxx\"><code class=\"language-xxxx\">");
+    }
+    return words.join(" ");
+}
+
+/** @auth Matheus Castiglioni
+ *  Inserir blocos de código com formatação
+ */
+function markDownCodeLanguage(line) {
+    const words = line.split(SPLIT_SPACE);
+    for (let i = 0; i < words.length; i++) {
+        words[i] = words[i].replace(REGEXP_CODE_LANGUAGE, "<pre class=\"language-$5\"><code class=\"language-$5\">");
+    }
+    return words.join(" ");
+}
+
+/** @auth Matheus Castiglioni
+ *  Fechar blocos de código
+ */
+function markDownCodeClose(line) {
+    const words = line.split(SPLIT_SPACE);
+    for (let i = 0; i < words.length; i++) {
+        words[i] = words[i].replace(REGEXP_CODE_CLOSE, "</code></pre>");
+    }
+    return words.join(" ");
+}
+
+/** @auth Matheus Castiglioni
+ *  Inserir blocos de código com formatação
+ */
+function markDownCodeInline(line) {
+    const words = line.split(SPLIT_SPACE);
+    for (let i = 0; i < words.length; i++) {
+        words[i] = words[i].replace(REGEXP_CODE_INLINE, "<code class=\"language-xxxx\">$3");
+    }
+    return words.join(" ");
+}
+
+/** @auth Matheus Castiglioni
+ *  Inserir blocos de código com formatação
+ */
+function markDownCodeInlineClose(line) {
+    const words = line.split(SPLIT_SPACE);
+    for (let i = 0; i < words.length; i++) {
+        words[i] = words[i].replace(REGEXP_CODE_INLINE_CLOSE, "$2</code>");
+    }
+    return words.join(" ");
+}
+
+/** @auth Matheus Castiglioni
+ *  Inserir os identação
+ */
+const markDownTab = line => line.replace(REGEXP_TAB, "&nbsp;&nbsp;&nbsp;&nbsp;");
+
+/** @auth Matheus Castiglioni
+ *  Inserindo as classes do editor em todas as tags do HTML
+ */
+function insertClass(line) {
+    line = line.replace(REGEXP_TAG_P, "<$3 class=\"md-editor__$3\">");
+    line = line.replace(REGEXP_TAG_STRONG, "<$3 class=\"md-editor__$3\">");
+    line = line.replace(REGEXP_TAG_EM, "<$3 class=\"md-editor__$3\">");
+    line = line.replace(REGEXP_TAG_H1, "<$3 class=\"md-editor__$3\">");
+    line = line.replace(REGEXP_TAG_H2, "<$3 class=\"md-editor__$3\">");
+    line = line.replace(REGEXP_TAG_H3, "<$3 class=\"md-editor__$3\">");
+    line = line.replace(REGEXP_TAG_H4, "<$3 class=\"md-editor__$3\">");
+    line = line.replace(REGEXP_TAG_H5, "<$3 class=\"md-editor__$3\">");
+    line = line.replace(REGEXP_TAG_H6, "<$3 class=\"md-editor__$3\">");
+    line = line.replace(REGEXP_TAG_A, "<$3 class=\"md-editor__$3\" $5");
+    line = line.replace(REGEXP_TAG_IMG, "<$3 class=\"md-editor__$3\" $5");
+    line = line.replace(REGEXP_TAG_VIDEO, "<$3 class=\"md-editor__$3\" $5");
+    line = line.replace(REGEXP_TAG_BLOCKQUOTE, "<$3 class=\"md-editor__$3\">");
+    line = line.replace(REGEXP_TAG_UL, "<$3 class=\"md-editor__$3\">");
+    line = line.replace(REGEXP_TAG_LI, "<$3 class=\"md-editor__$3\">");
+    return line;
+}
+
+/** @auth Matheus Castiglioni
+ *  Processando uma tecla digitada no editor
+ */
+function processKey(event) {
+    if (event.key.toLowerCase() === "tab") {
+        event.preventDefault();
+        getSelectionCursor(event.target);
+        insertTab(event.target);
+    }
+}
+
+/** @auth Matheus Castiglioni
+ *  Pegando a posição do cursor no editor
  */
 function getSelectionCursor(editor) {
     EDITOR_CURSOR_POSITION_BEGIN = editor.selectionStart;
@@ -204,139 +437,44 @@ function getSelectionCursor(editor) {
 }
 
 /** @auth Matheus Castiglioni
- *  Pega o html gerado pelo markdown e insere no preview
+ *  Inserindo identação
  */
-function insertOutput(element, html) {
-    let output = element;
-    if (element.nodeName === 'TEXTAREA')
-        output = element.nextSibling.nextSibling;
-    output.innerHTML = html;
+function insertTab(editor) {
+    editor.value = editor.value.substring(0, EDITOR_CURSOR_POSITION_BEGIN) + "\t" + editor.value.substring(EDITOR_CURSOR_POSITION_END, editor.value.length);
+    editor.setSelectionRange((EDITOR_CURSOR_POSITION_END + 1), (EDITOR_CURSOR_POSITION_END + 1));
 }
 
 /** @auth Matheus Castiglioni
- *  Processa o markdown da tag P
+ *  Procura todos os editores da página e insere o editor de MarkDown
  */
-function markDownP(html) {
-    return html.replace(REGEX_P, '<p class="md-editor__p">$1</p>');
-}
+const editors = document.querySelectorAll(".md-editor__init");
+editors.forEach(editor => build(editor));
 
 /** @auth Matheus Castiglioni
- *  Processa o markdown da tag STRONG
+ *  Procura todos os elementos que possuem o texto MarkDown e compila para o HTML
  */
-function markDownStrong(html) {
-    return html.replace(REGEX_STRONG, '<strong class="md-editor__strong">$3</strong>');
-}
+const bases = document.querySelectorAll(".md-editor__base");
+bases.forEach(base => base.innerHTML = compile(base.textContent));
 
 /** @auth Matheus Castiglioni
- *  Processa o markdown da tag EM
+ *  Inicializa os textos areas
  */
-function markDownEM(html) {
-    return html.replace(REGEX_EM, '<em class="md-editor__em">$3</em>');
-}
+const datas = document.querySelectorAll(".md-editor__data");
+datas.forEach(data => processMarkDown(data, event));
 
 /** @auth Matheus Castiglioni
- *  Processa o markdown da tag H1
- */
-function markDownH1(html) {
-    return html.replace(REGEX_H1, '<h1 class="md-editor__h1">$3</h1>');
-}
-
-/** @auth Matheus Castiglioni
- *  Processa o markdown da tag H2
- */
-function markDownH2(html) {
-    return html.replace(REGEX_H2, '<h2 class="md-editor__h2">$3</h2>');
-}
-
-/** @auth Matheus Castiglioni
- *  Processa o markdown da tag H3
- */
-function markDownH3(html) {
-    return html.replace(REGEX_H3, '<h3 class="md-editor__h3">$3</h3>');
-}
-
-/** @auth Matheus Castiglioni
- *  Processa o markdown da tag H4
- */
-function markDownH4(html) {
-    return html.replace(REGEX_H4, '<h4 class="md-editor__h4">$3</h4>');
-}
-
-/** @auth Matheus Castiglioni
- *  Processa o markdown da tag H5
- */
-function markDownH5(html) {
-    return html.replace(REGEX_H5, '<h5 class="md-editor__h5">$3</h5>');
-}
-
-/** @auth Matheus Castiglioni
- *  Processa o markdown da tag H6
- */
-function markDownH6(html) {
-    return html.replace(REGEX_H6, '<h6 class="md-editor__h6">$3</h6>');
-}
-
-/** @auth Matheus Castiglioni
- *  Processa o markdown da tag A
- */
-function markDownA(html) {
-    return html.replace(REGEX_A, '<a class="md-editor__link" href="$6">$3</a>');
-}
-
-/** @auth Matheus Castiglioni
- *  Processa o markdown da tag IMG
- */
-function markDownIMG(html) {
-    return html.replace(REGEX_IMG, '<img alt="$4" class="md-editor__img" src="$7">');
-}
-
-/** @auth Matheus Castiglioni
- *  Processa o markdown da tag IFRAME
- */
-function markDownIframe(html) {
-    return html.replace(REGEX_IFRAME, '<iframe class="md-editor__iframe" src="$7">');
-}
-
-/** @auth Matheus Castiglioni
- *  Processa o markdown da tag BLOCKQUOTE
- */
-function markDownBlockquote(html) {
-    return html.replace(REGEX_BLOCKQUOTE, '<blockquote class="md-editor__blockquote">$3</blockquote>');
-}
-
-/** @auth Matheus Castiglioni
- *  Processa o markdown da tag code inline
- */
-function markDownCode(html) {
-    let code = html.replace(REGEX_CODE, '$6');
-    code = code.replace(new RegExp('(([\\<])([a-z\\d]+)([\\s])([c][l][a][s]{2})([\\=])([\\"])([m][d])([\\-])([e][d][i][t][o][r])([\\_]{2})([a-z\\d]+)([\\"])([\\>])(.*)([\\<])([\\/])([a-z\\d]+)([\\>]))', 'gim'), '$15');
-    code = code.replace(new RegExp('(([\\<])([a-z\\d]+)([\\s])([c][l][a][s]{2})([\\=])([\\"])([m][d])([\\-])([e][d][i][t][o][r])([\\_]{2})([a-z\\d]+)([\\"])([\\>])(.*)([\\<])([\\/])([a-z\\d]+)([\\>]))', 'gim'), '');
-    code = code.replace(/[\\<]/g, '&lt;').replace(/[\\>]/g, '&gt;');
-    code = code.trim();
-    html = html.replace(REGEX_CODE, `<pre class="$3 language-xxxx"><code class="$3 language-xxxx">${code}</code></pre>`);
-    return html;
-}
-
-/** @auth Matheus Castiglioni
- *  Processa o markdown da identação do código
- */
-function markDownIdentation(html) {
-    return html.replace(REGEX_IDENTATION, '&nbsp;&nbsp;&nbsp;&nbsp;');
-}
-
-/** @auth Matheus Castiglioni
- *  Mostra o submenu com mais opção para o editor 
+ *  Mostra o submenu com mais opção para o editor
  */
 function showSubMenu(button) {
-    let subMenu = button.parentNode.querySelector('ul');
-    if (subMenu != undefined)
-        showHideElement(subMenu);
+    const subMenu = button.parentNode.querySelector('ul');
+    if (subMenu)
+        toggleElement(subMenu);
 }
 
 /** @auth Matheus Castiglioni
- *  Mostra e esconde determinado elemento 
+ *  Mostra e esconde determinado elemento
  */
-function showHideElement(element) {
+function toggleElement(element) {
     if (isHide(element))
         element.style.display = 'block';
     else
@@ -344,31 +482,31 @@ function showHideElement(element) {
 }
 
 /** @auth Matheus Castiglioni
- *  Verifica se um elemento esta escondido ou visível 
+ *  Verifica se um elemento esta escondido ou visível
  */
 function isHide(element) {
     return element.style.display == undefined || element.style.display == '' || element.style.display == 'none';
 }
 
 /** @auth Matheus Castiglioni
- *  Mostra e esconde o preview da digitação 
+ *  Mostra e esconde o preview da digitação
  */
 function expand(button) {
-    let data = button.parentNode.parentNode.parentNode.parentNode.querySelector('textarea');
-    let output = button.parentNode.parentNode.parentNode.parentNode.querySelector('output');
-    if (data != undefined && output != undefined) {
+    const data = button.parentNode.parentNode.parentNode.parentNode.querySelector('textarea');
+    const output = button.parentNode.parentNode.parentNode.parentNode.querySelector('output');
+    if (data && output) {
         data.classList.toggle('is-full');
         output.classList.toggle('is-hide');
     }
 }
 
 /** @auth Matheus Castiglioni
- *  Mostra e esconde as dicas de formatação do mark down 
+ *  Mostra e esconde as dicas de formatação do mark down
  */
 function help(button) {
-    let help = button.parentNode.parentNode.parentNode.parentNode.querySelector('.md-editor__help');
-    if (help != undefined)
-        showHideElement(help);
+    const help = button.parentNode.parentNode.parentNode.parentNode.querySelector('.md-editor__help');
+    if (help)
+        toggleElement(help);
 }
 
 /** @auth Matheus Castiglioni
@@ -395,38 +533,38 @@ function insertItalic(button) {
 function insertH1(button) {
     const editor = button.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('.md-editor__data');
     if (editor)
-        insertMarkDown(editor, '# ', null, EDITOR_CURSOR_POSITION_BEGIN, EDITOR_CURSOR_POSITION_END, 2);  
-    showHideElement(button.parentNode.parentNode);
+        insertMarkDown(editor, '# ', null, EDITOR_CURSOR_POSITION_BEGIN, EDITOR_CURSOR_POSITION_END, 2);
+    toggleElement(button.parentNode.parentNode);
 }
 function insertH2(button) {
     const editor = button.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('.md-editor__data');
     if (editor)
-        insertMarkDown(editor, '## ', null, EDITOR_CURSOR_POSITION_BEGIN, EDITOR_CURSOR_POSITION_END, 3);  
-    showHideElement(button.parentNode.parentNode);
+        insertMarkDown(editor, '## ', null, EDITOR_CURSOR_POSITION_BEGIN, EDITOR_CURSOR_POSITION_END, 3);
+    toggleElement(button.parentNode.parentNode);
 }
 function insertH3(button) {
     const editor = button.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('.md-editor__data');
     if (editor)
-        insertMarkDown(editor, '### ', null, EDITOR_CURSOR_POSITION_BEGIN, EDITOR_CURSOR_POSITION_END, 4);  
-    showHideElement(button.parentNode.parentNode);
+        insertMarkDown(editor, '### ', null, EDITOR_CURSOR_POSITION_BEGIN, EDITOR_CURSOR_POSITION_END, 4);
+    toggleElement(button.parentNode.parentNode);
 }
 function insertH4(button) {
     const editor = button.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('.md-editor__data');
     if (editor)
-        insertMarkDown(editor, '#### ', null, EDITOR_CURSOR_POSITION_BEGIN, EDITOR_CURSOR_POSITION_END, 5);  
-    showHideElement(button.parentNode.parentNode);
+        insertMarkDown(editor, '#### ', null, EDITOR_CURSOR_POSITION_BEGIN, EDITOR_CURSOR_POSITION_END, 5);
+    toggleElement(button.parentNode.parentNode);
 }
 function insertH5(button) {
     const editor = button.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('.md-editor__data');
     if (editor)
-        insertMarkDown(editor, '##### ', null, EDITOR_CURSOR_POSITION_BEGIN, EDITOR_CURSOR_POSITION_END, 6);  
-    showHideElement(button.parentNode.parentNode);
+        insertMarkDown(editor, '##### ', null, EDITOR_CURSOR_POSITION_BEGIN, EDITOR_CURSOR_POSITION_END, 6);
+    toggleElement(button.parentNode.parentNode);
 }
 function insertH6(button) {
     const editor = button.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('.md-editor__data');
     if (editor)
-        insertMarkDown(editor, '###### ', null, EDITOR_CURSOR_POSITION_BEGIN, EDITOR_CURSOR_POSITION_END, 7);  
-    showHideElement(button.parentNode.parentNode);
+        insertMarkDown(editor, '###### ', null, EDITOR_CURSOR_POSITION_BEGIN, EDITOR_CURSOR_POSITION_END, 7);
+    toggleElement(button.parentNode.parentNode);
 }
 
 /** @auth Matheus Castiglioni
@@ -502,7 +640,7 @@ function insertMarkDown(editor, markdownBegin, markdownEnd, positionBegin, posit
         editor.setSelectionRange(EDITOR_CURSOR_POSITION_END + currentPosition, EDITOR_CURSOR_POSITION_END + currentPosition);
         processMarkDown(editor);
     } else {
-        editor.value = editor.value.substring(0, positionBegin) + markdownBegin + (markdownEnd != null ? markdownEnd : '') + editor.value.substring(EDITOR_CURSOR_POSITION_BEGIN, editor.value.length);    
+        editor.value = editor.value.substring(0, positionBegin) + markdownBegin + (markdownEnd != null ? markdownEnd : '') + editor.value.substring(EDITOR_CURSOR_POSITION_BEGIN, editor.value.length);
         editor.focus();
         editor.setSelectionRange((EDITOR_CURSOR_POSITION_BEGIN + currentPosition), (EDITOR_CURSOR_POSITION_BEGIN + currentPosition));
         processMarkDown(editor);
@@ -514,13 +652,4 @@ function insertMarkDown(editor, markdownBegin, markdownEnd, positionBegin, posit
  */
 function hasTextSelected(begin , end) {
     return begin != end;
-}
-
-/** @auth Matheus Castiglioni
- *  Cria a div que ira englobar todos os componentes do editor
- */
-function buildWrap() {
-    let wrap = document.createElement('DIV');
-    wrap.classList.add('md-editor');
-    return wrap;
 }

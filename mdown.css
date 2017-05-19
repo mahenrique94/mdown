@@ -121,14 +121,13 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Estilizando os elementos do editor */
 .md-editor__p {
-	line-height: 2;
 	margin: 0;
 }
 .md-editor__strong {
 	font-weight: bold;
 }
 .md-editor__em {
-	font-weight: 100;
+	font-style: italic;
 }
 .md-editor__h1, .md-editor__h2, .md-editor__h3, .md-editor__h4, .md-editor__h5, .md-editor__h6 {
 	margin: .5rem 0;
