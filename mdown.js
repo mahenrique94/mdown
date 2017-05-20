@@ -180,7 +180,7 @@ const insertOutPut = (editor, html) => editor.nextElementSibling.innerHTML = htm
 /** @auth Matheus Castiglioni
  *  Rolar automáticamente o preview de acordo com o seu crescimento
  */
-const scrollOutPut = editor => editor.nextElementSibling.scrollTop = editor.nextElementSibling.clientHeight;
+const scrollOutPut = editor => editor.nextElementSibling.scrollTop = editor.nextElementSibling.scrollHeight;
 
 /** @auth Matheus Castiglioni
  *  Compiltar o MarkDown e gerar um HTML
