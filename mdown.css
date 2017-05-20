@@ -135,11 +135,13 @@ h1, h2, h3, h4, h5, h6 {
 	text-decoration: underline;
 }
 .md-editor__img {
-	width: 50%;
+    margin-bottom: 1rem;
+	width: 100%;
 }
 .md-editor__iframe {
+    height: 500px;
+    margin-bottom: 1rem;
 	width: 100%;
-	height: 500px;
 }
 .md-editor__blockquote {
 	margin: 2rem 3rem;
