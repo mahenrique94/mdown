@@ -157,8 +157,19 @@ function constroy() {
  */
 function processMarkDown(editor, event) {
     insertOutPut(editor, compile(editor.value));
+    const codes = editor.nextElementSibling.querySelectorAll("code");
+    codes.forEach(code => clean(code));
     Prism.highlightAll();
     scrollOutPut(editor);
+}
+
+function clean(code) {
+    const CLEAN_P_START = new RegExp("(([<][p])([\\s])([c][l][a][s][s])([=])([\\\"])([[m][d][\\-][e][d][i][t][o][r][_]{2}[p])([\\\"])([>]))", "gim");
+    const CLEAN_P_CLOSE = new RegExp("(([<][\\/][p][>]))", "gim");
+    const CLEAN_P = new RegExp("(([<][p][>])|([<][\/][p][>]))", "gim");
+    code.innerHTML = code.innerHTML.replace(CLEAN_P_START, "");
+    code.innerHTML = code.innerHTML.replace(CLEAN_P_CLOSE, "\n");
+    code.innerHTML = code.innerHTML.replace(CLEAN_P, "");
 }
 
 /** @auth Matheus Castiglioni
