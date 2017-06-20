@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <title>Mdown</title>
+    <link rel="stylesheet" href="assets/css/normalize.css">
+    <link rel="stylesheet" href="icons/stilize.css">
+    <link rel="stylesheet" href="mdown.css">
+    <link rel="stylesheet" href="lib/prism.css">
+    <link rel="stylesheet" href="assets/css/menu.css">
+    <link rel="stylesheet" href="assets/css/footer.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="conteudo menu">
+            <h1 class="menu-titulo">Mdown</h1>
+            <ul class="menu-lista">
+                <li class="menu-item"><a class="menu-link" href="http://mdown.matheuscastiglioni.com.br">Inicio</a></li>
+                <li class="menu-item"><a class="menu-link" href="http://mdown.matheuscastiglioni.com.br/documentacao.html">Documentação</a></li>
+                <li class="menu-item"><a class="menu-link" href="http://mdown.matheuscastiglioni.com.br/demo.html" target="_blank">Demo</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main class="conteudo principal">
+        <textarea class="md-editor__init" name="editor" id="editor"></textarea>
+    </main>
+    <footer class="conteudo footer">
+        <label footer-autor>Criado por Matheus Castiglioni</label>
+        <ul class="redes-sociais">
+            <li><a class="facebook" href="https://www.facebook.com/matheus.castiglioni.5" target="_blank"><i class="icon-facebook-squared"></i></a></li>
+            <li><a class="github" href="https://github.com/mahenrique94" target="_blank"><i class="icon-github-squared"></i></a></li>
+            <li><a class="google-plus" href="https://plus.google.com/116607343343494563581" target="_blank"><i class="icon-gplus-squared"></i></a></li>
+            <li><a class="instagram" href="https://www.instagram.com/mahenrique94/" target="_blank"><i class="icon-instagram"></i></a></li>
+            <li><a class="linkedin" href="https://www.linkedin.com/in/matheus-castiglioni-7aa105114" target="_blank"><i class="icon-linkedin-squared"></i></a></li>
+            <li><a class="twitter" href="https://twitter.com/mahenrique94" target="_blank"><i class="icon-twitter-squared"></i></a></li>
+        </ul>
+    </footer>
+    <script>
+        const editor = document.querySelector("#editor");
+        editor.value = `#Mdown\n\nO editor **Mdown** foi feito para trabalhar com a linguagem [Mark-Down](https://pt.wikipedia.org/wiki/Markdown) utilizada para converter marcações para um código HTML válido.\n\nPara isso devemos seguir uma certa regra onde cada __tag__ HTML possuí sua própria marcação.\n\nPodermos inserir imagens:\n![Perry](http://www.downloadswallpapers.com/wallpapers/2012/fevereiro/wallpaper-phineas-e-ferb-perry-o-ornitorrinco-1550.jpg)\n\nVídeos:\n?[South-Park](https://www.youtube.com/embed/Twhe355rZLM)\n\nTrechos de código:\n[code-javascript]\nfunction olaMundo() {\n\tconsole.log("Ola Mundo!!!");\n}\n[/code]\n\nTambém poder ser inserido \`\`\`inline\`\`\`.\n\n> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sit amet sapien ac nisi malesuada porttitor at vel arcu. \n\nE muitos outros recursos que podem ser lidos na [documentação](http://mdown.matheuscastiglioni.com.br/documentacao.html).`;
+    </script>
+    <script src="lib/prism.js"></script>
+    <script src="mdown.js"></script>
+</body>
+</html>

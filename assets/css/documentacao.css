@@ -1,0 +1,15 @@
+.documentacao p {
+    color: #595959;
+    font-weight: 100;
+}
+
+.documentacao-titulo {
+    color: #595959;
+    font-weight: 500;
+}
+
+.documentacao-exemplo {
+    background: #F9F9F9;
+    margin-bottom: 1rem;
+    padding: .5rem;
+}
