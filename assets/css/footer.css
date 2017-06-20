@@ -4,7 +4,6 @@
     display: flex;
     justify-content: space-between;
 }
-
 .footer-autor {
     color: #333333;
 }
@@ -12,7 +11,6 @@
 .redes-sociais, .redes-sociais li {
     display: inline-block;
 }
-
 .redes-sociais a {
     color: #595959;
     display: block;

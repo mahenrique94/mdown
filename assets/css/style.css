@@ -1,15 +1,12 @@
-.demo {
-    padding: 2rem;
-}
-
 .conteudo {
     padding: 1.5rem 3rem;
 }
-
+.demo {
+    padding: 2rem;
+}
 .principal {
     min-height: calc(100vh - 262px);
 }
-
 .subtitulo {
     color: #595959;
     margin-bottom: .5rem;
