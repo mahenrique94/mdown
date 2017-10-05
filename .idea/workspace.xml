@@ -2,38 +2,53 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3ac037ee-3033-4624-9b15-a0375428ddc7" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Gemfile" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_config.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_data/nav.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_data/project.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_data/social.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_layouts/page.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_pages/demo.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_pages/documentacao.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_pages/instalacao.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/index.md" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/DEMO.md" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/css/como-usar.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/css/documentacao.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/css/footer.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/css/menu.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/css/normalize.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/css/style.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/demo.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/documentacao.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/icons/stilize.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/icons/stilize.eot" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/icons/stilize.svg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/icons/stilize.ttf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/icons/stilize.woff" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/icons/stilize.woff2" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/prism.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/prism.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/mdown.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/mdown.js" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/css/font-awesome/fonts/FontAwesome.otf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/css/font-awesome/fonts/fontawesome-webfont.eot" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/css/font-awesome/fonts/fontawesome-webfont.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/css/font-awesome/fonts/fontawesome-webfont.woff" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/css/font-awesome/fonts/fontawesome-webfont.woff2" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/css/stilize/font/Roboto-Black.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/css/stilize/font/Roboto-BlackItalic.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/css/stilize/font/Roboto-Bold.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/css/stilize/font/Roboto-BoldItalic.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/css/stilize/font/Roboto-Italic.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/css/stilize/font/Roboto-Light.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/css/stilize/font/Roboto-LightItalic.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/css/stilize/font/Roboto-Medium.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/css/stilize/font/Roboto-MediumItalic.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/css/stilize/font/Roboto-Regular.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/css/stilize/font/Roboto-Thin.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/css/stilize/font/Roboto-ThinItalic.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/css/stilize/icons/stilize/stilize.eot" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/css/stilize/icons/stilize/stilize.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/css/stilize/icons/stilize/stilize.woff" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/css/stilize/icons/stilize/stilize.woff2" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_includes/aside.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_includes/footer.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_includes/header.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_includes/nav.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/css/aside.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/css/config.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/css/font-awesome/css/font-awesome.min.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/css/font-awesome/fonts/fontawesome-webfont.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/css/footer.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/css/header.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/css/nav.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/css/normalize.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/css/page.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/css/prism/prism.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/css/reset.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/css/responsive.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/css/stilize/icons/stilize/stilize.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/css/stilize/stilize.min.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/js/prism/prism.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/js/responsive.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/js/stilize/stilize.min.js" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Gemfile" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Gemfile.lock" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_config.yml" afterPath="$PROJECT_DIR$/_config.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_layouts/page.html" afterPath="$PROJECT_DIR$/_layouts/page.html" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -46,7 +61,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -57,13 +72,13 @@
         <option value="$PROJECT_DIR$/mdown.css" />
         <option value="$PROJECT_DIR$/mdown.js" />
         <option value="$PROJECT_DIR$/demo.html" />
-        <option value="$PROJECT_DIR$/_config.yml" />
         <option value="$PROJECT_DIR$/index.md" />
         <option value="$PROJECT_DIR$/_pages/instalacao.md" />
         <option value="$PROJECT_DIR$/_layouts/page.html" />
         <option value="$PROJECT_DIR$/_pages/documentacao.md" />
         <option value="$PROJECT_DIR$/_pages/demo.md" />
         <option value="$PROJECT_DIR$/Gemfile" />
+        <option value="$PROJECT_DIR$/_config.yml" />
       </list>
     </option>
   </component>
@@ -104,7 +119,6 @@
     </navigator>
     <panes>
       <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -116,6 +130,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -124,8 +139,8 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/assets" />
       <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/assets" />
       <recent name="$PROJECT_DIR$/_layouts" />
       <recent name="$PROJECT_DIR$/lib" />
     </key>
@@ -157,24 +172,26 @@
       <workItem from="1499715761198" duration="142000" />
       <workItem from="1501679062773" duration="3069000" />
       <workItem from="1507165341133" duration="2156000" />
+      <workItem from="1507204652752" duration="71000" />
+      <workItem from="1507243090169" duration="51000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8332000" />
+    <option name="totallyTimeSpent" value="8454000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="773" extended-state="0" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2494043" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2494043" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32890856" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32890856" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -195,102 +212,22 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/mdown.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="65" lean-forward="false" selection-start-line="15" selection-start-column="60" selection-end-line="15" selection-end-column="65" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/demo.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="26" column="21" lean-forward="true" selection-start-line="26" selection-start-column="21" selection-end-line="26" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mdown.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/demo.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="630">
-          <caret line="42" column="0" lean-forward="false" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mdown.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="23" lean-forward="true" selection-start-line="7" selection-start-column="23" selection-end-line="7" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/demo.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="615">
-          <caret line="41" column="93" lean-forward="false" selection-start-line="41" selection-start-column="93" selection-end-line="41" selection-end-column="93" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mdown.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="24" lean-forward="false" selection-start-line="1" selection-start-column="24" selection-end-line="1" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mdown.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-601">
-          <caret line="86" column="18" lean-forward="true" selection-start-line="86" selection-start-column="18" selection-end-line="86" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/mdown.js" />
+    <entry file="file://$PROJECT_DIR$/demo.html" />
+    <entry file="file://$PROJECT_DIR$/mdown.js" />
+    <entry file="file://$PROJECT_DIR$/demo.html" />
+    <entry file="file://$PROJECT_DIR$/mdown.js" />
+    <entry file="file://$PROJECT_DIR$/demo.html" />
+    <entry file="file://$PROJECT_DIR$/mdown.js" />
+    <entry file="file://$PROJECT_DIR$/mdown.css" />
     <entry file="file://$PROJECT_DIR$/lib/markdown.js" />
-    <entry file="file://$PROJECT_DIR$/demo.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="26" column="21" lean-forward="false" selection-start-line="26" selection-start-column="21" selection-end-line="26" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DEMO.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="FIRST">
-          <first_editor relative-caret-position="210">
-            <caret line="14" column="0" lean-forward="true" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-            <folding />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mdown.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-9496">
-          <caret line="15" column="67" lean-forward="true" selection-start-line="15" selection-start-column="67" selection-end-line="15" selection-end-column="67" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/demo.html" />
+    <entry file="file://$PROJECT_DIR$/DEMO.md" />
+    <entry file="file://$PROJECT_DIR$/mdown.js" />
     <entry file="file://$PROJECT_DIR$/_data/nav.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -298,7 +235,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -306,7 +242,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -315,7 +250,6 @@
         <state split_layout="FIRST">
           <first_editor relative-caret-position="105">
             <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-            <folding />
           </first_editor>
           <second_editor />
         </state>
@@ -326,60 +260,27 @@
         <state split_layout="FIRST">
           <first_editor relative-caret-position="225">
             <caret line="15" column="33" lean-forward="false" selection-start-line="15" selection-start-column="33" selection-end-line="15" selection-end-column="33" />
-            <folding />
           </first_editor>
           <second_editor />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/assets/prism.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/prism.js" />
     <entry file="file://$PROJECT_DIR$/lib/mdown.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="6578">
           <caret line="460" column="59" lean-forward="true" selection-start-line="460" selection-start-column="43" selection-end-line="460" selection-end-column="59" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/_layouts/page.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="27" column="24" lean-forward="true" selection-start-line="27" selection-start-column="24" selection-end-line="27" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/_layouts/page.html" />
     <entry file="file://$PROJECT_DIR$/_pages/documentacao.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="FIRST">
           <first_editor relative-caret-position="435">
             <caret line="29" column="137" lean-forward="true" selection-start-line="29" selection-start-column="137" selection-end-line="29" selection-end-column="137" />
-            <folding />
           </first_editor>
           <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_config.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="22" lean-forward="true" selection-start-line="17" selection-start-column="22" selection-end-line="17" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Gemfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="43" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -388,9 +289,31 @@
         <state split_layout="FIRST">
           <first_editor relative-caret-position="135">
             <caret line="9" column="32" lean-forward="false" selection-start-line="9" selection-start-column="32" selection-end-line="9" selection-end-column="32" />
-            <folding />
           </first_editor>
           <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Gemfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="43" lean-forward="false" selection-start-line="2" selection-start-column="43" selection-end-line="2" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_config.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="23" lean-forward="false" selection-start-line="18" selection-start-column="23" selection-end-line="18" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_includes/nav.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>

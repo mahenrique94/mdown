@@ -13,6 +13,7 @@ collections:
   pages:
     output: true
     permalink: /:name
+css: lib/mdown.css
 layout: "page"
+js: lib/mdown.js
 static_files: "assets/"
-theme: mhc-project-doc
