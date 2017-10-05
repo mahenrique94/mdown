@@ -1,0 +1,18 @@
+# Information
+autor: Matheus Castiglioni
+baseurl: ""
+description: "Documentação do projeto MDown"
+email: matheushcastiglioni@gmail.com
+projectname: mdown
+projecturl: https://github.com/mahenrique94/mdown
+title: "MDown"
+url: mdown.matheuscastiglioni.com.br
+
+# Configuration
+collections:
+  pages:
+    output: true
+    permalink: /:name
+layout: "page"
+static_files: "assets/"
+theme: mhc-project-doc

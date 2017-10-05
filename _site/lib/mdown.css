@@ -1,0 +1,160 @@
+/* Retirando margin dos cabeçalhos */
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+}
+
+/* Elemento que irá conter todo o editor */
+.md-editor {
+    border: 1px solid #DCDCDC;
+    display: inline-block;
+    position: relative;
+    width: 100%;
+}
+
+/* Elemento que irá conter os botões para edição */
+.md-editor__toolbar {
+    background: #F1F1F1;
+    border-bottom: 1px solid #DCDCDC;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Menu principal */
+.md-editor__menu, .md-editor__item {
+    display: inline-block;
+}
+.md-editor__menu, .md-editor__submenu {
+    margin: 0;
+    padding: 0;
+}
+
+/* Menu escondido, é mostrado ao clicar sobre um botão do menu principal */
+.md-editor__submenu {
+    background: #FFFFFF;
+    border: 1px solid #DCDCDC;
+    display: none;
+    height: 150px;
+    overflow-x: auto;
+    position: absolute;
+}
+.md-editor__subitem {
+    list-style: none;
+}
+
+/* Botoões para interagir com o editor */
+.md-editor__action {
+    background: transparent;
+    border: none;
+    color: #595959;
+    padding: 1rem;
+    position: relative;
+    width: 100%;
+}
+.md-editor__action:focus {
+    outline: none;
+}
+.md-editor__action:hover {
+    background: #E0E0E0;
+    cursor: pointer;
+}
+
+/* Textarea que irá receber a digitação e elemento que irá mostrar a digitação formatada */
+.md-editor__data, .md-editor__output {
+	background: #FFFFFF;
+    border: none;
+    box-sizing: border-box;
+    color: #808080;
+    float: left;
+    font-weight: 100;
+    height: 300px;
+    overflow-y: auto;
+    padding: 1rem;
+    resize: none;
+    width: 50%;
+    word-wrap: break-word;
+}
+.md-editor__data {
+    border-right: 2px solid #DCDCDC;
+}
+.md-editor__data.is-full {
+    border-right: none;
+    width: 100%;
+}
+.md-editor__data:focus {
+    outline: none;
+}
+
+/* Formatando tags no output */
+.md-editor__output strong {
+    font-weight: bold;
+}
+.md-editor__output img, .md-editor__output iframe {
+    border: none;
+    height: 250px;    
+    width: 100%;
+}
+
+/* Elemento que irá conter dicas de como funcionca o mark down */
+.md-editor__help {
+    background: #595959;
+    box-sizing: border-box;
+    color: #F2F2F2;
+    display: none;
+    font-weight: 100;
+    height: 300px;
+    overflow-x: auto;
+    padding: 1rem;
+    position: absolute;
+    top: 50px;
+    width: 100%;
+}
+
+/* Separator de dicas do mark down */
+.md-editor__info {
+    margin-bottom: 5rem;
+}
+.md-editor__info:last-child {
+    margin-bottom: 0;
+}
+
+/* Estilizando os elementos do editor */
+.md-editor__p {
+	margin: 0;
+}
+.md-editor__strong {
+	font-weight: bold;
+}
+.md-editor__em {
+	font-style: italic;
+}
+.md-editor__h1, .md-editor__h2, .md-editor__h3, .md-editor__h4, .md-editor__h5, .md-editor__h6 {
+	margin: .5rem 0;
+}
+.md-editor__link {
+	font-weight: 300;
+	text-decoration: underline;
+}
+.md-editor__img {
+    margin-bottom: 1rem;
+	width: 100%;
+}
+.md-editor__iframe {
+    height: 500px;
+    margin-bottom: 1rem;
+	width: 100%;
+}
+.md-editor__blockquote {
+	margin: 2rem 3rem;
+	padding: 1rem 2.5rem;
+	position: relative;
+}
+.md-editor__blockquote::before {
+	color: #DCDCDC;
+	content: '"';
+	font-family: cursive;
+	font-size: 4.5rem;
+	left: 0;
+	opacity: .5;
+	position: absolute;
+	top: 0;
+}
